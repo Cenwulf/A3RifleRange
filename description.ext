@@ -1,0 +1,24 @@
+onLoadName = "Rifle Range Test";
+onLoadMission = "Test mission showcasing new rifle range and scoreboard.";
+// Author = "Alasdair Scott [16AA]";
+disabledAI = 1;
+enableDebugConsole = 1;
+disableChannels[]={,1,2,3,4,5,6};	//disable all default channels except global
+
+
+class Header
+{
+	gameType = COOP; //game type
+	minPlayers = 1; //min # of players the mission supports
+	maxPlayers = 5; //max # of players the mission supports
+};
+
+class CfgFunctions
+{
+	#include "rifleRange\functions.hpp"
+};
+
+class CfgSounds
+{
+	#include "rifleRange\sounds.hpp"
+};

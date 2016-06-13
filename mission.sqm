@@ -1,0 +1,2071 @@
+version=52;
+class EditorData
+{
+	moveGridStep=1;
+	angleGridStep=0.2617994;
+	scaleGridStep=1;
+	autoGroupingDist=10;
+	toggles=1;
+	class ItemIDProvider
+	{
+		nextID=72;
+	};
+	class Camera
+	{
+		pos[]={23473.133,29.909105,18866.301};
+		dir[]={-0.26209334,-0.25169098,0.93171507};
+		up[]={-0.068184368,0.96778208,0.2423833};
+		aside[]={0.96269852,7.6880679e-007,0.27081534};
+	};
+};
+binarizationWanted=0;
+addons[]=
+{
+	"A3_Structures_F_Items_Electronics",
+	"A3_Structures_F_Mil_BagBunker",
+	"A3_Structures_F_Civ_Camping",
+	"ace_sitting",
+	"A3_Structures_F_Training",
+	"A3_Structures_F_Mark_Training",
+	"A3_Structures_F_Walls",
+	"A3_Signs_F_Signs_Ad",
+	"A3_Structures_F_Civ_Accessories",
+	"A3_Characters_F",
+	"A3_Weapons_F_Rifles_MX",
+	"A3_Sounds_F",
+	"ace_realisticnames",
+	"ace_ai",
+	"ace_ballistics",
+	"A3_Weapons_F_Acc",
+	"ace_fcs",
+	"A3_Weapons_F",
+	"ace_smallarms",
+	"A3_Weapons_F_Pistols_Pistol_Heavy_01",
+	"ace_attach",
+	"A3_Weapons_F_Items",
+	"ace_medical"
+};
+class AddonsMetaData
+{
+	class List
+	{
+		items=15;
+		class Item0
+		{
+			className="A3_Structures_F";
+			name="Arma 3 Alpha - Buildings and structures";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item1
+		{
+			className="A3_Structures_F_Mil";
+			name="Arma 3 - Military Buildings and Structures";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item2
+		{
+			className="ace_sitting";
+			name="ace_sitting";
+		};
+		class Item3
+		{
+			className="A3_Structures_F_Mark";
+			name="Arma 3 Marksmen - Buildings and structures";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item4
+		{
+			className="A3_Signs_F";
+			name="Arma 3 - Signs";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item5
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item6
+		{
+			className="A3_Weapons_F";
+			name="Arma 3 Alpha - Weapons and Accessories";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item7
+		{
+			className="A3_Sounds_F";
+			name="Arma 3 - Sound Effects";
+			author="Bohemia Interactive";
+			url="http://www.arma3.com";
+		};
+		class Item8
+		{
+			className="ace_realisticnames";
+			name="ace_realisticnames";
+		};
+		class Item9
+		{
+			className="ace_ai";
+			name="ace_ai";
+		};
+		class Item10
+		{
+			className="ace_ballistics";
+			name="ace_ballistics";
+		};
+		class Item11
+		{
+			className="ace_fcs";
+			name="ace_fcs";
+		};
+		class Item12
+		{
+			className="ace_smallarms";
+			name="ace_smallarms";
+		};
+		class Item13
+		{
+			className="ace_attach";
+			name="ace_attach";
+		};
+		class Item14
+		{
+			className="ace_medical";
+			name="ace_medical";
+		};
+	};
+};
+randomSeed=12367569;
+class ScenarioData
+{
+	author="Alasdair Scott [16AA]";
+};
+class CustomAttributes
+{
+	class Category0
+	{
+		name="Scenario";
+		class Attribute0
+		{
+			property="EnableDebugConsole";
+			expression="true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[]=
+						{
+							"SCALAR"
+						};
+					};
+					value=0;
+				};
+			};
+		};
+		nAttributes=1;
+	};
+};
+class Mission
+{
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.014;
+		forecastFogDecay=0.014;
+	};
+	class Entities
+	{
+		items=68;
+		class Item0
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23454.795,4.1590776,18937.223};
+				angles[]={0,2.1991148,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="null = [this,""ETR""] spawn RR_fnc_addAceActions";
+			};
+			id=0;
+			type="Land_Laptop_unfolded_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item1
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23455.727,4.1556311,18936.777};
+				angles[]={0,2.3493004,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=1;
+			type="Land_BagBunker_Small_F";
+		};
+		class Item2
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23454.883,3.5965028,18937.426};
+				angles[]={0,2.3493004,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=2;
+			type="Land_CampingTable_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item3
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23456.129,3.6976569,18937.037};
+				angles[]={0,1.6755161,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=3;
+			type="Land_CampingChair_V1_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item4
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23438.434,3.2690132,18854.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="this setPos [(getPos this) select 0, (getPos this) select 1, -0.1]; for ""_i"" from 1 to 99 do {_modelPos = this modelToWorld [0,4*_i,0]; _pos = [_modelPos select 0, _modelPos select 1, -0.1]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this);};";
+			};
+			id=4;
+			type="Land_Obstacle_Saddle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item5
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23432.434,3.2690132,18854.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="this setPos [(getPos this) select 0, (getPos this) select 1, -0.1]; for ""_i"" from 1 to 99 do {_modelPos = this modelToWorld [0,4*_i,0]; _pos = [_modelPos select 0, _modelPos select 1, -0.1]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this);};";
+			};
+			id=5;
+			type="Land_Obstacle_Saddle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item6
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23426.434,3.2690132,18854.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="this setPos [(getPos this) select 0, (getPos this) select 1, -0.1]; for ""_i"" from 1 to 99 do {_modelPos = this modelToWorld [0,4*_i,0]; _pos = [_modelPos select 0, _modelPos select 1, -0.1]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this);};";
+			};
+			id=6;
+			type="Land_Obstacle_Saddle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item7
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23420.434,3.2690132,18854.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="this setPos [(getPos this) select 0, (getPos this) select 1, -0.1]; for ""_i"" from 1 to 99 do {_modelPos = this modelToWorld [0,4*_i,0]; _pos = [_modelPos select 0, _modelPos select 1, -0.1]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this);};";
+			};
+			id=7;
+			type="Land_Obstacle_Saddle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item8
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23414.434,3.2690132,18854.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="this setPos [(getPos this) select 0, (getPos this) select 1, -0.1]; for ""_i"" from 1 to 99 do {_modelPos = this modelToWorld [0,4*_i,0]; _pos = [_modelPos select 0, _modelPos select 1, -0.1]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this);};";
+			};
+			id=8;
+			type="Land_Obstacle_Saddle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item9
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23408.434,3.2690132,18854.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				init="this setPos [(getPos this) select 0, (getPos this) select 1, -0.1]; for ""_i"" from 1 to 99 do {_modelPos = this modelToWorld [0,4*_i,0]; _pos = [_modelPos select 0, _modelPos select 1, -0.1]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this);};";
+			};
+			id=9;
+			type="Land_Obstacle_Saddle_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item10
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0480719,19052.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l1_c_0";
+			};
+			id=10;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item11
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0480719,19252.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l1_f_0";
+			};
+			id=11;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item12
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23410.434,4.0480719,19152.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l1_m_0";
+			};
+			id=12;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item13
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0480719,19052.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l2_c_0";
+			};
+			id=13;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item14
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0480719,19252.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l2_f_0";
+			};
+			id=14;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item15
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23416.434,4.0480719,19152.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l2_m_0";
+			};
+			id=15;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item16
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0480719,19052.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l3_c_0";
+			};
+			id=16;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item17
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0480719,19252.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l3_f_0";
+			};
+			id=17;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item18
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23422.434,4.0480719,19152.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l3_m_0";
+			};
+			id=18;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item19
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0480719,19052.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l4_c_0";
+			};
+			id=19;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item20
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0480719,19252.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l4_f_0";
+			};
+			id=20;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item21
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23428.434,4.0480719,19152.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l4_m_0";
+			};
+			id=21;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item22
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0480719,19052.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l5_c_0";
+			};
+			id=22;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item23
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0480719,19252.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l5_f_0";
+			};
+			id=23;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item24
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23434.434,4.0480719,19152.254};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="ETR_l5_m_0";
+			};
+			id=24;
+			type="TargetP_Inf4_NoPop_F";
+			atlOffset=2.3841858e-007;
+		};
+		class Item25
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,19257.754};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 4 do {_modelPos = this modelToWorld [0,-6*_i,0]; _pos = [_modelPos select 0, _modelPos select 1,0]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this)}";
+			};
+			id=25;
+			type="Land_Rampart_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item26
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,19257.754};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 4 do {_modelPos = this modelToWorld [0,-6*_i,0]; _pos = [_modelPos select 0, _modelPos select 1,0]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this)}";
+			};
+			id=26;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item27
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,19257.754};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 4 do {_modelPos = this modelToWorld [0,-6*_i,0]; _pos = [_modelPos select 0, _modelPos select 1,0]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this)}";
+			};
+			id=27;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item28
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,19257.754};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 4 do {_modelPos = this modelToWorld [0,-6*_i,0]; _pos = [_modelPos select 0, _modelPos select 1,0]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this)}";
+			};
+			id=28;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item29
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,19257.754};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 4 do {_modelPos = this modelToWorld [0,-6*_i,0]; _pos = [_modelPos select 0, _modelPos select 1,0]; _nul = createVehicle [typeOf this, _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir (getDir this)}";
+			};
+			id=29;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item30
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,18999.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=30;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item31
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,19003.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=31;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item32
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,18999.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=32;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item33
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,19003.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=33;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item34
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,18999.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=34;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item35
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,19003.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=35;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item36
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,18999.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=36;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item37
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,19003.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=37;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item38
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,18999.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=38;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item39
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,19003.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=39;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item40
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,18949.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=40;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item41
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,18953.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=41;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item42
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,18949.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=42;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item43
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,18953.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=43;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item44
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,18949.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=44;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item45
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,18953.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=45;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item46
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,18949.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=46;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item47
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,18953.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=47;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item48
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,18849.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=48;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item49
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,18849.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=49;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item50
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,4.0925608,18853.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=50;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item51
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,18849.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=51;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item52
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,4.0925608,18853.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=52;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item53
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,18849.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=53;
+			type="Land_Rampart_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+		class Item54
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,4.0925608,18853.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=54;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item55
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,18849.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=55;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item56
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,4.0925608,18853.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=56;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item57
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,18853.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=57;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item58
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,18949.354};
+				angles[]={0,1.5707964,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="this setPos [getPos this select 0,getPos this select 1,-1.8]; this setVectorUp (this modelToWorld [-0.228516,-0.0820313,0.120117] vectorDiff getPos this)";
+			};
+			id=58;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item59
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,4.0925608,18953.354};
+				angles[]={0,4.712389,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="for ""_i"" from 1 to 3 do {_modelPos = this modelToWorld [-0.9,3.52-(1.76*_i),0]; _pos = [_modelPos select 0, _modelPos select 1, -0.25]; _nul = createVehicle [""Land_BagFence_Short_F"", _pos, [], 0, ""CAN_COLLIDE""]; _nul setDir ((getDir this) - 270);}; this setPos [getPos this select 0,getPos this select 1,-1.7]; this setVectorUp (this modelToWorld [-0.228516,-0.113281,0.122559] vectorDiff getPos this);";
+			};
+			id=59;
+			type="Land_Rampart_F";
+			atlOffset=-2.3841858e-007;
+		};
+		class Item60
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23455.574,4.2310534,18929.855};
+				angles[]={0,2.3493004,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				init="null = [this,""ETR""] spawn RR_fnc_createScoreboard;";
+			};
+			id=60;
+			type="SignAd_Sponsor_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute2
+				{
+					property="ace_isMedicalFacility";
+					expression="_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=3;
+			};
+		};
+		class Item61
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23411.434,5.5180535,19257.754};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				name="ETR_l1_sign";
+			};
+			id=61;
+			type="SignAd_Sponsor_F";
+			atlOffset=1.2870002;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item62
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23417.434,5.5180535,19257.754};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				name="ETR_l2_sign";
+			};
+			id=62;
+			type="SignAd_Sponsor_F";
+			atlOffset=1.2870002;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item63
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23423.434,5.5180535,19257.754};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				name="ETR_l3_sign";
+			};
+			id=63;
+			type="SignAd_Sponsor_F";
+			atlOffset=1.2870002;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item64
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23429.434,5.5180535,19257.754};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				name="ETR_l4_sign";
+			};
+			id=64;
+			type="SignAd_Sponsor_F";
+			atlOffset=1.2870002;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item65
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23435.434,5.5180535,19257.754};
+			};
+			side="Empty";
+			flags=1;
+			class Attributes
+			{
+				name="ETR_l5_sign";
+			};
+			id=65;
+			type="SignAd_Sponsor_F";
+			atlOffset=1.2870002;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="enableSimulation";
+					expression="if !(is3DEN) then {_this enablesimulationglobal _value;};";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item66
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={23458.857,6.6931853,18938.34};
+				angles[]={0,2.3493004,0};
+			};
+			side="Empty";
+			flags=5;
+			class Attributes
+			{
+				name="ETR_loudspeaker";
+			};
+			id=66;
+			type="Land_Loudspeakers_F";
+		};
+		class Item67
+		{
+			dataType="Group";
+			side="West";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={23463.508,3.1914389,18921.768};
+					};
+					side="West";
+					flags=7;
+					class Attributes
+					{
+						isPlayer=1;
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="arifle_MXC_F";
+								optics="optic_MRCO";
+								class primaryMuzzleMag
+								{
+									name="30Rnd_65x39_caseless_mag";
+									ammoLeft=30;
+								};
+							};
+							class handgun
+							{
+								name="hgun_Pistol_heavy_01_F";
+								optics="optic_MRD";
+								class primaryMuzzleMag
+								{
+									name="11Rnd_45ACP_Mag";
+									ammoLeft=11;
+								};
+							};
+							class uniform
+							{
+								typeName="U_B_CombatUniform_mcam";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=2;
+									class Item0
+									{
+										name="30Rnd_65x39_caseless_mag";
+										count=2;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="Chemlight_green";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="V_BandollierB_rgr";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=5;
+									class Item0
+									{
+										name="30Rnd_65x39_caseless_mag";
+										count=1;
+										ammoLeft=30;
+									};
+									class Item1
+									{
+										name="11Rnd_45ACP_Mag";
+										count=2;
+										ammoLeft=11;
+									};
+									class Item2
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="Chemlight_green";
+										count=1;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							headgear="H_MilCap_mcamo";
+						};
+					};
+					id=68;
+					type="B_officer_F";
+				};
+			};
+			class Attributes
+			{
+			};
+			id=67;
+		};
+	};
+};
