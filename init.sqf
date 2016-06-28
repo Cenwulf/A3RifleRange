@@ -1,5 +1,5 @@
 enableSaving [false, false];
 
-If isServer then {
+if isServer then {
 	["ETR"] call RR_fnc_initRifleRange;
 };

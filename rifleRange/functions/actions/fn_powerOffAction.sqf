@@ -23,7 +23,7 @@ _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
 sleep 0.5;
 
-missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],false];
+missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],false,true];
 
 if (typeOf (missionNameSpace getVariable format ["%1_CONTROL_OBJ",_rangeID]) == "Land_Laptop_unfolded_F") then {
 	missionNameSpace getVariable format ["%1_CONTROL_OBJ",_rangeID] setObjectTextureGlobal [0,"rifleRange\textures\blk.paa"];

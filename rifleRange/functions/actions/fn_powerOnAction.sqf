@@ -22,11 +22,11 @@ params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams"
 _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
 sleep 0.5;
-/*
+
 if (typeOf (missionNamespace getVariable format ["%1_CONTROL_OBJ",_rangeID]) == "Land_Laptop_unfolded_F") then {
 	missionNamespace getVariable format ["%1_CONTROL_OBJ",_rangeID] setObjectTextureGlobal [0,"rifleRange\textures\laptop5a.paa"];
 };
-
+/*
 // display 00 on score board (100)
 {
 	if (_x < missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID]) then {
@@ -67,4 +67,4 @@ sleep ((random 1) + 0.5);
 	_x animate ["Terc",1];
 } forEach (missionNamespace getVariable format ["%1_ALL_TARGETS",_rangeID]);
 
-missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],true];
+missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],true,true];

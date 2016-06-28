@@ -27,7 +27,7 @@ if (_primary) then {
 	_targ setVariable ["isActive",true]; // now registers hits
 	_targ setVariable ["isScoring",true]; // hits add to score
 
-	waitUntil {(_targ getVariable "hitNumber" >= 5 || serverTime >= _time)};
+	waitUntil {(_targ getVariable "hitNumber" >= _hits || serverTime >= _time)};
 
 	_targ setVariable ["isActive",false]; // stop registering hits
 	_targ setVariable ["isScoring",false]; // hits do not add to score

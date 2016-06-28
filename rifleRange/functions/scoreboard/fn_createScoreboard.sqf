@@ -99,7 +99,7 @@ l5HighScore10 = [_scoreboardObj,_scoreboardDir,_l5HighScore10_relPos] call RR_fn
 
 waitUntil {missionNamespace getVariable [format ["%1_INIT_DONE", _rangeID],false]};
 
-missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], [[[l1Score1,l1Score10],[l1HighScore1,l1HighScore10]],[[l2Score1,l2Score10],[l2HighScore1,l2HighScore10]],[[l3Score1,l3Score10],[l3HighScore1,l3HighScore10]],[[l4Score1,l4Score10],[l4HighScore1,l4HighScore10]],[[l5Score1,l5Score10],[l5HighScore1,l5HighScore10]]]]; // Temporary stopgap until dynamic scoreboard creation is up and running
+missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], [[[l1Score1,l1Score10],[l1HighScore1,l1HighScore10]],[[l2Score1,l2Score10],[l2HighScore1,l2HighScore10]],[[l3Score1,l3Score10],[l3HighScore1,l3HighScore10]],[[l4Score1,l4Score10],[l4HighScore1,l4HighScore10]],[[l5Score1,l5Score10],[l5HighScore1,l5HighScore10]]]]; // pLACEHOLDER until dynamic scoreboard creation is up and running
 
 // TODO1: Enable dynamic placement of between 1 and 5 lanes by selectively disabling lanes on scoreboard (make a number of different textures for taped over scoreboad digits).
 // TODO2: Dynamic placement of scoreboard rows to allow for flexibility in number of lanes.
