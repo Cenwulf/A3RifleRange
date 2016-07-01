@@ -100,7 +100,7 @@ _actionStop = [format ["%1AllStop",_rangeID],"Stop","",{_this remoteExec ["RR_fn
 
 _actionReset = [format ["%1AllReset",_rangeID],"Reset","",{_this remoteExec ["RR_fnc_ResetAction",2]},{_this call RR_fnc_resetCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
-_actionClearHighScore = [format ["%1AllClear",_rangeID],"Clear Highscores","",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+_actionClearHighScore = [format ["%1AllClear",_rangeID],"Clear Highscores","",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{true},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
 [_obj,0,["ACE_MainActions"],_actionLane] call ace_interact_menu_fnc_addActionToObject;
 
@@ -128,9 +128,9 @@ _actionPowerOff = [format ["%1PowerOff",_rangeID],"Shutdown","",{_this remoteExe
 
 _actionTestSpeaker = [format ["%1TestSpeaker",_rangeID],"Test Loudspeaker","",{},{_this call RR_fnc_testSpeakerCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
-_actionTestLong = [format ["%1TestLong",_rangeID],"Long Sound","",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_LONG.wav"]] call ace_interact_menu_fnc_createAction;
+_actionTestLong = [format ["%1TestLong",_rangeID],"Long Sound","",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{true},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_LONG.wav"]] call ace_interact_menu_fnc_createAction;
 
-_actionTestShort = [format ["%1TestShort",_rangeID],"Short Sound","",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_SHORT.wav"]] call ace_interact_menu_fnc_createAction;
+_actionTestShort = [format ["%1TestShort",_rangeID],"Short Sound","",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{true},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_SHORT.wav"]] call ace_interact_menu_fnc_createAction;
 
 [_obj,0,["ACE_MainActions"],_actionTestSpeaker] call ace_interact_menu_fnc_addActionToObject;
 
