@@ -12,10 +12,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={23913.834,17.825821,18178.102};
-		dir[]={0.78284138,-0.38530824,0.48860833};
-		up[]={0.32686657,0.9227885,0.20401451};
-		aside[]={0.52948815,2.1845335e-006,-0.84833819};
+		pos[]={23924.174,7.4338536,18195.666};
+		dir[]={0.64326686,-0.40424532,-0.65030313};
+		up[]={0.28429341,0.91464776,-0.28740159};
+		aside[]={-0.71097469,2.0500738e-006,-0.70327967};
 	};
 };
 binarizationWanted=0;
@@ -1710,7 +1710,7 @@ class Mission
 			flags=5;
 			class Attributes
 			{
-				init="if isServer then {null = [this,""ETR""] spawn RR_fnc_createScoreboard;};";
+				init="null = [this,""ETR""] spawn RR_fnc_createScoreboard;";
 			};
 			id=60;
 			type="SignAd_Sponsor_F";

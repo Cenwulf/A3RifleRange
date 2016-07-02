@@ -11,7 +11,7 @@ class Header
 	minPlayers = 1; //min # of players the mission supports
 	maxPlayers = 5; //max # of players the mission supports
 };
-////////////// Everything beyond here is essential. //////////////
+
 class CfgFunctions
 {
 	#include "rifleRange\functions.hpp"
@@ -21,4 +21,3 @@ class CfgSounds
 {
 	#include "rifleRange\sounds.hpp"
 };
-//////////////////////////////////////////////////////////////////

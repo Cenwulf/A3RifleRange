@@ -3,7 +3,7 @@ scriptName "fn_createScoreboard";
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
 	Description:
-	Called for an appropriate sign board object, applies the scoreboard background texture then creates a "UserTexture1M_F" object for each digit by calling RR_fnc_createSBDigit.
+	Called for an appropriate sign board object, applies the scoreboard background texture then creates a "UserTexture1M_F" object for each digit by calling RR_fnc_createSBDigit. Must be called on all clients.
 
 	Parameter(s):
 	_this select 0: Object - Scoreboard object
@@ -27,8 +27,6 @@ scriptName "fn_createScoreboard";
 	[<CONTROL_OBJECT>,rangeID] call RR_fnc_addAceActions
 */
 #define SELF RR_fnc_createScoreboard
-
-if !isServer exitWith {};
 
 params [["_scoreboardObj",objNull,[objNull]],["_rangeID","",[""]]];
 
