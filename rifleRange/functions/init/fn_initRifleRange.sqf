@@ -1,4 +1,4 @@
-scriptName "fn_initRifleRange:";
+scriptName "fn_initRifleRange";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
@@ -7,26 +7,27 @@ scriptName "fn_initRifleRange:";
 
 	Parameter(s):
 	_this select 0: String - Unique Range ID used to identify the range and all its components, passed to all subsequent functions.
-	_this select 1: String - Range type, need to match one of the standard range types listed below.
+	_this select 1: String - Range type, needs to match one of the standard range types listed below.
 
 	Returns:
 	Nothing
 
 	Notes:
 	Range types:	"ETR" - Electronic Training Range - Narrow, multi-lane range with few targets per range.
-					"IBSR" - Idividual Battle Skills Range - Large range suitable for single firer or firer + spotter.
+					"IBSR" - Individual Battle Skills Range - Large range suitable for single firer or firer + spotter.
 					"HBSR" - Hollywood Bull-Shit Range - An odd combination of the above that most people (myself included) first think of when they hear the phrase rifle range.
 */
-#define SELF _fnc_fn_initRifleRange
+#define SELF RR_fnc_initRifleRange
 
+// TODO: Macros
 /*
-todo: macro.hpp (maybe)
-#define getVarName(ID,VARNAME) missionNamespace getVariable format ["%1_VARNAME", ID]
-#define setVarName(ID,VARNAME,VALUE) missionNamespace setVariable [format ["%1_VARNAME", ID],VALUE]
-#define setVarNamePub(ID,VARNAME,VALUE) missionNamespace setVariable [format ["%1_VARNAME", ID],VALUE,true]
+#include rifleRange\macro.hpp
+	#define RRGVAR(ID,VARNAME) missionNamespace getVariable format ["%1_%2",ID,VARNAME]
+	#define RRSVAR(ID,VARNAME,VALUE) missionNamespace setVariable [format ["%1_%2",ID,VARNAME],VALUE]
+	#define RRSPUBVAR(ID,VARNAME,VALUE) missionNamespace setVariable [format ["%1_%2",ID,VARNAME],VALUE,true]
 */
 
-if !(isServer) exitWith {};
+if !isServer exitWith {};
 
 params [["_rangeID","",[""]],["_rangeType","ETR",[""]]];
 

@@ -1,48 +1,20 @@
+scriptName "fn_addAceActions";
 /*
-Possible action structures:
+	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
-going with 1
-1:	LaneN					Action					Condition										Comments
-		Start				_startAction			Reset
-		Stop  				_stopAction				Started
-		Reset Lane			_resetAction			None
-		Reset High Score	_clearHighScoreActiom	Stopped
+	Description:
+	Adds ace actions to an object to control rifle range with matching Range ID.
 
+	Parameter(s):
+	_this select 0: Object - Object actions are to be added to.
+	_this select 1: String - Unique Range ID, first defined when creating  rifle range RR_fnc_iniRifleRange and passed to all subsequent functions.
 
-	All Lanes
-		Start				_startAction			All Lanes Stopped
-		Stop  				_stopAction				Started
-		Reset Lane			_resetAction			Stopped
-		Reset High Score	_clearHighScoreActiom	Stopped
-
-	Power on				_powerOn
-
-	Shutdown
-		Confirm				_shutDownAction
-
-
-
-2:	LaneN
-		Activate Lane		_activateAction			Inactive
-		Deactivate Lane		_deactivateAction		Active
-		Start				_startAction			Stopped & Active
-		Stop				_stopAction				Started
-		Reset Lane			_resetAction			Active
-		Reset Highscore		_clearHighScoreActiom	Active, Stopped	& High Score != 0 or -1
-
-	All Active Lanes
-		Start/Stop
-		Reset Lanes
-		Reset Highscore
-
-	Power on				_powerOn				Off
-
-	Shutdown
-		Confirm				_shutDownAction			On
-
+	Returns:
+	Nothing
 */
+#define SELF RR_fnc_addAceActions
 
-params [["_obj",objNull,[objNull]],["_rangeID","",[""]]]; // range that the object will control
+params [["_obj",objNull,[objNull]],["_rangeID","",[""]]];
 
 private ["_laneIndecies","_actionLane","_actionStart","_actionStop","_actionReset","_actionClearHighScore","_actionPowerOn","_actionPowerOff","_actionName"];
 
@@ -112,18 +84,6 @@ _actionClearHighScore = [format ["%1AllClear",_rangeID],"Clear Highscores","",{_
 
 [_obj,0,["ACE_MainActions",format ["%1All",_rangeID]],_actionClearHighScore] call ace_interact_menu_fnc_addActionToObject;
 
-// Power On
-
-_actionPowerOn = [format ["%1PowerOn",_rangeID],"Boot Up","",{_this remoteExec ["RR_fnc_powerOnAction",2]},{!(_this call RR_fnc_powerCondition)},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
-
-[_obj,0,["ACE_MainActions"],_actionPowerOn] call ace_interact_menu_fnc_addActionToObject;
-
-// Power Off
-
-_actionPowerOff = [format ["%1PowerOff",_rangeID],"Shutdown","",{_this remoteExec ["RR_fnc_powerOffAction",2]},{_this call RR_fnc_powerCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
-
-[_obj,0,["ACE_MainActions"],_actionPowerOff] call ace_interact_menu_fnc_addActionToObject;
-
 // Test Loudspeaker
 
 _actionTestSpeaker = [format ["%1TestSpeaker",_rangeID],"Test Loudspeaker","",{},{_this call RR_fnc_testSpeakerCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
@@ -137,3 +97,15 @@ _actionTestShort = [format ["%1TestShort",_rangeID],"Short Sound","",{_this remo
 [_obj,0,["ACE_MainActions",format ["%1TestSpeaker",_rangeID]],_actionTestLong] call ace_interact_menu_fnc_addActionToObject;
 
 [_obj,0,["ACE_MainActions",format ["%1TestSpeaker",_rangeID]],_actionTestShort] call ace_interact_menu_fnc_addActionToObject;
+
+// Power On
+
+_actionPowerOn = [format ["%1PowerOn",_rangeID],"Boot Up","",{_this remoteExec ["RR_fnc_powerOnAction",2]},{!(_this call RR_fnc_powerCondition)},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+
+[_obj,0,["ACE_MainActions"],_actionPowerOn] call ace_interact_menu_fnc_addActionToObject;
+
+// Power Off
+
+_actionPowerOff = [format ["%1PowerOff",_rangeID],"Shutdown","",{_this remoteExec ["RR_fnc_powerOffAction",2]},{_this call RR_fnc_powerCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+
+[_obj,0,["ACE_MainActions"],_actionPowerOff] call ace_interact_menu_fnc_addActionToObject;

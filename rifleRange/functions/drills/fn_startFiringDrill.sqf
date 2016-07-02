@@ -1,3 +1,22 @@
+scriptName "fn_startFiringDrill";
+/*
+	Author: Alasdair Scott [16AA] <http://16aa.net/>
+
+	Description:
+	A list of different firing drills to be called for different types of ranges.
+
+	Parameter(s):
+	_this select 0: Object - Object the action was attached to.
+	_this select 1: Object - Player object who performed the action.
+	_this select 2: Array - Custom params passed through ACE action.
+		_this select 2 select 0: String - Unique Range ID, generated when creating rifle range and passed to all subsequent functions.
+		_this select 2 select 1: Array - Array of numbers referring to each lane to be modified by function.
+
+	Returns:
+	Bool - True when done
+*/
+#define SELF RR_fnc_startFiringDrill
+
 params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams",[],[[]]]];
 
 _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];

@@ -1,20 +1,34 @@
+scriptName "fn_runProgram";
+/*
+	Author: Alasdair Scott [16AA] <http://16aa.net/>
+
+	Description:
+	Describe your function
+
+	Parameter(s):
+	_this select 0: String - Unique Range ID, first defined when creating  rifle range RR_fnc_iniRifleRange and passed to all subsequent functions.
+	_this select 1: Number - Index of lane being modified.
+	_this select 2: Number - Server time used to sync all lanes.
+	_this select 3: Array - Array of arrays, each element is defines a number of values for a specific target in a sequence.
+	_this select 4: Bool - RR_fnc_runProgram is called individually for each lane in a range, this argument defines a single lane to be designated primaray lane and is used to controll timing of the buzzer sound.
+
+	Returns:
+	Nothing
+*/
+#define SELF RR_fnc_runProgram
+
 params [["_rangeID","",[""]],["_laneIndex",0,[0]],["_time",0,[0]],["_program",[],[[]]],["_primary",false,[true]]];
 
-private ["_distIndex","_targIndex","_hits","_interval","_buzzer","_targ"];
-
-_primary = if (isNil format ["%1_loudspeaker", _rangeID]) then {false} else {true};
+_primary = if (isNil format ["%1_loudspeaker", _rangeID]) then {false} else {_primary};
 
 if (_primary) then {
-	["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981]] call RR_fnc_PlayMissionSound3D;
+	["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],5] call RR_fnc_PlayMissionSound3D;
 };
 
 {
-	_distIndex = _x select 0;
-	_targIndex = _x select 1;
-	_hits = _x select 2;
-	_upTime = _x select 3;
-	_interval = _x select 4;
-	_buzzer = _x select 5;
+	_x params [["_distIndex",0,[0]],["_targIndex",0,[0]],["_hits",0,[0]],["_upTime",0,[0]],["_interval",0,[0]],["_buzzer",false,[true]]];
+
+	private ["_targ"];
 
 	_time = _time + _upTime;
 
@@ -27,26 +41,30 @@ if (_primary) then {
 	_targ setVariable ["isActive",true]; // now registers hits
 	_targ setVariable ["isScoring",true]; // hits add to score
 
-	waitUntil {(_targ getVariable "hitNumber" >= _hits || serverTime >= _time)};
+	waitUntil {_targ getVariable "hitNumber" >= _hits || serverTime >= _time || missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex select 1};
+
+	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 1 || !(missionNamespace getVariable format ["%1_POWER_ON",_rangeID])) exitWith {
+		_targ setVariable ["hitNumber",0]; // reset hit counter on target
+	};
 
 	_targ setVariable ["isActive",false]; // stop registering hits
 	_targ setVariable ["isScoring",false]; // hits do not add to score
 
 	_targ animate ["Terc",1]; // lower target
 
-	waitUntil {serverTime >= _time};
+	waitUntil {serverTime >= _time || missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex select 1};
 
 	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 1 || !(missionNamespace getVariable format ["%1_POWER_ON",_rangeID])) exitWith {
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
 	};
 
 	if (_primary && _buzzer) then {
-		["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981]] call RR_fnc_playMissionSound3D;
+		["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],5] call RR_fnc_playMissionSound3D;
 	};
 
 	_time = _time + _interval;
 
-	waitUntil {serverTime >= _time};
+	waitUntil {serverTime >= _time || missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex select 1};
 
 	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 1 || !(missionNamespace getVariable format ["%1_POWER_ON",_rangeID])) exitWith {
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
@@ -58,7 +76,7 @@ missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneInd
 missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex set [2,false]; // reset = false
 
 if (_primary) then {
-	["rifleRange\sounds\BUZZER_ARENA_LONG.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981]] call RR_fnc_playMissionSound3D;
+	["rifleRange\sounds\BUZZER_ARENA_LONG.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],5] call RR_fnc_playMissionSound3D;
 };
 
 // update high score

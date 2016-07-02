@@ -1,4 +1,4 @@
-scriptName "fn_startAction:";
+scriptName "fn_startAction";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
@@ -7,15 +7,15 @@ scriptName "fn_startAction:";
 
 	Parameter(s):
 	_this select 0: Object - Object the action was attached to.
-	_this select 1: Object - Player object who perforemed the action.
+	_this select 1: Object - Player object who performed the action.
 	_this select 2: Array - Custom params passed through ACE action.
 		_this select 2 select 0: String - Unique Range ID, generated when creating rifle range and passed to all subsequent functions.
-		_this select 2 select 1: Array - Array of numbers refering to each lane to be modified by function.
+		_this select 2 select 1: Array - Array of numbers referring to each lane to be modified by function.
 
 	Returns:
 	Nothing
 */
-#define SELF _fnc_fn_startAction
+#define SELF RR_fnc_startAction
 
 params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams",[],[[]]]];
 

@@ -1,4 +1,4 @@
-// scriptName "fn_playMissionSound3D:";
+scriptName "fn_playMissionSound3D";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
@@ -11,7 +11,7 @@
 	Returns:
 	Nothing
 */
-// #define SELF _fnc_fn_playMissionSound3D
+#define SELF RR_fnc_playMissionSound3D
 
 params [["_soundPath","",[""]],["_source",objNull,[objNull]],["_isInside",false,[true]],["_soundPos",[0,0,0],[[]],[3]],["_volume",1,[0]],["_pitch",1,[1]],["_dist",0,[0]]];
 

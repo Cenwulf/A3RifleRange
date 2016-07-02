@@ -1,8 +1,9 @@
+scriptName "fn_createScoreboard";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
 	Description:
-	Describe your function
+	Called for an appropriate sign board object, applies the scoreboard background texture then creates a "UserTexture1M_F" object for each digit by calling RR_fnc_createSBDigit.
 
 	Parameter(s):
 	_this select 0: Object - Scoreboard object
@@ -25,8 +26,9 @@
 	The fn_addAceActions.sqf should be called as follow from the init field of the scorboard object in the editor or from init.sqf (NOT BOTH):
 	[<CONTROL_OBJECT>,rangeID] call RR_fnc_addAceActions
 */
+#define SELF RR_fnc_createScoreboard
 
-_scoreboardObj = param [0,objNull,[objNull]];
+if !isServer exitWith {};
 
 params [["_scoreboardObj",objNull,[objNull]],["_rangeID","",[""]]];
 
@@ -76,30 +78,32 @@ _l5Score10_relPos =		[_score10_x,		_depth_y,	_lane5_z];
 _l5HighScore1_relPos =	[_highScore1_x,		_depth_y,	_lane5_z];
 _l5HighScore10_relPos =	[_highScore10_x,	_depth_y,	_lane5_z];
 
-l1Score1 = [_scoreboardObj,_scoreboardDir,_l1Score1_relPos] call RR_fnc_createSBDigit;
-l1Score10 = [_scoreboardObj,_scoreboardDir,_l1Score10_relPos] call RR_fnc_createSBDigit;
-l1HighScore1 = [_scoreboardObj,_scoreboardDir,_l1HighScore1_relPos] call RR_fnc_createSBDigit;
-l1HighScore10 = [_scoreboardObj,_scoreboardDir,_l1HighScore10_relPos] call RR_fnc_createSBDigit;
-l2Score1 = [_scoreboardObj,_scoreboardDir,_l2Score1_relPos] call RR_fnc_createSBDigit;
-l2Score10 = [_scoreboardObj,_scoreboardDir,_l2Score10_relPos] call RR_fnc_createSBDigit;
-l2HighScore1 = [_scoreboardObj,_scoreboardDir,_l2HighScore1_relPos] call RR_fnc_createSBDigit;
-l2HighScore10 = [_scoreboardObj,_scoreboardDir,_l2HighScore10_relPos] call RR_fnc_createSBDigit;
-l3Score1 = [_scoreboardObj,_scoreboardDir,_l3Score1_relPos] call RR_fnc_createSBDigit;
-l3Score10 = [_scoreboardObj,_scoreboardDir,_l3Score10_relPos] call RR_fnc_createSBDigit;
-l3HighScore1 = [_scoreboardObj,_scoreboardDir,_l3HighScore1_relPos] call RR_fnc_createSBDigit;
-l3HighScore10 = [_scoreboardObj,_scoreboardDir,_l3HighScore10_relPos] call RR_fnc_createSBDigit;
-l4Score1 = [_scoreboardObj,_scoreboardDir,_l4Score1_relPos] call RR_fnc_createSBDigit;
-l4Score10 = [_scoreboardObj,_scoreboardDir,_l4Score10_relPos] call RR_fnc_createSBDigit;
-l4HighScore1 = [_scoreboardObj,_scoreboardDir,_l4HighScore1_relPos] call RR_fnc_createSBDigit;
-l4HighScore10 = [_scoreboardObj,_scoreboardDir,_l4HighScore10_relPos] call RR_fnc_createSBDigit;
-l5Score1 = [_scoreboardObj,_scoreboardDir,_l5Score1_relPos] call RR_fnc_createSBDigit;
-l5Score10 = [_scoreboardObj,_scoreboardDir,_l5Score10_relPos] call RR_fnc_createSBDigit;
-l5HighScore1 = [_scoreboardObj,_scoreboardDir,_l5HighScore1_relPos] call RR_fnc_createSBDigit;
-l5HighScore10 = [_scoreboardObj,_scoreboardDir,_l5HighScore10_relPos] call RR_fnc_createSBDigit;
+_l1Score1 = [_scoreboardObj,_scoreboardDir,_l1Score1_relPos] call RR_fnc_createSBDigit;
+_l1Score10 = [_scoreboardObj,_scoreboardDir,_l1Score10_relPos] call RR_fnc_createSBDigit;
+_l1HighScore1 = [_scoreboardObj,_scoreboardDir,_l1HighScore1_relPos] call RR_fnc_createSBDigit;
+_l1HighScore10 = [_scoreboardObj,_scoreboardDir,_l1HighScore10_relPos] call RR_fnc_createSBDigit;
+_l2Score1 = [_scoreboardObj,_scoreboardDir,_l2Score1_relPos] call RR_fnc_createSBDigit;
+_l2Score10 = [_scoreboardObj,_scoreboardDir,_l2Score10_relPos] call RR_fnc_createSBDigit;
+_l2HighScore1 = [_scoreboardObj,_scoreboardDir,_l2HighScore1_relPos] call RR_fnc_createSBDigit;
+_l2HighScore10 = [_scoreboardObj,_scoreboardDir,_l2HighScore10_relPos] call RR_fnc_createSBDigit;
+_l3Score1 = [_scoreboardObj,_scoreboardDir,_l3Score1_relPos] call RR_fnc_createSBDigit;
+_l3Score10 = [_scoreboardObj,_scoreboardDir,_l3Score10_relPos] call RR_fnc_createSBDigit;
+_l3HighScore1 = [_scoreboardObj,_scoreboardDir,_l3HighScore1_relPos] call RR_fnc_createSBDigit;
+_l3HighScore10 = [_scoreboardObj,_scoreboardDir,_l3HighScore10_relPos] call RR_fnc_createSBDigit;
+_l4Score1 = [_scoreboardObj,_scoreboardDir,_l4Score1_relPos] call RR_fnc_createSBDigit;
+_l4Score10 = [_scoreboardObj,_scoreboardDir,_l4Score10_relPos] call RR_fnc_createSBDigit;
+_l4HighScore1 = [_scoreboardObj,_scoreboardDir,_l4HighScore1_relPos] call RR_fnc_createSBDigit;
+_l4HighScore10 = [_scoreboardObj,_scoreboardDir,_l4HighScore10_relPos] call RR_fnc_createSBDigit;
+_l5Score1 = [_scoreboardObj,_scoreboardDir,_l5Score1_relPos] call RR_fnc_createSBDigit;
+_l5Score10 = [_scoreboardObj,_scoreboardDir,_l5Score10_relPos] call RR_fnc_createSBDigit;
+_l5HighScore1 = [_scoreboardObj,_scoreboardDir,_l5HighScore1_relPos] call RR_fnc_createSBDigit;
+_l5HighScore10 = [_scoreboardObj,_scoreboardDir,_l5HighScore10_relPos] call RR_fnc_createSBDigit;
 
 waitUntil {missionNamespace getVariable [format ["%1_INIT_DONE", _rangeID],false]};
 
-missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], [[[l1Score1,l1Score10],[l1HighScore1,l1HighScore10]],[[l2Score1,l2Score10],[l2HighScore1,l2HighScore10]],[[l3Score1,l3Score10],[l3HighScore1,l3HighScore10]],[[l4Score1,l4Score10],[l4HighScore1,l4HighScore10]],[[l5Score1,l5Score10],[l5HighScore1,l5HighScore10]]]]; // pLACEHOLDER until dynamic scoreboard creation is up and running
+missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], [[[_l1Score1,_l1Score10],[_l1HighScore1,_l1HighScore10]],[[_l2Score1,_l2Score10],[_l2HighScore1,_l2HighScore10]],[[_l3Score1,_l3Score10],[_l3HighScore1,_l3HighScore10]],[[_l4Score1,_l4Score10],[_l4HighScore1,_l4HighScore10]],[[_l5Score1,_l5Score10],[_l5HighScore1,_l5HighScore10]]]]; // placeholder until dynamic scoreboard creation is up and running
+
+publicVariable format ["%1_DIGITS_ARRAY",_rangeID];
 
 // TODO1: Enable dynamic placement of between 1 and 5 lanes by selectively disabling lanes on scoreboard (make a number of different textures for taped over scoreboad digits).
 // TODO2: Dynamic placement of scoreboard rows to allow for flexibility in number of lanes.
