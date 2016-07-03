@@ -7,7 +7,7 @@ scriptName "fn_addAceActions";
 
 	Parameter(s):
 	_this select 0: Object - Object actions are to be added to.
-	_this select 1: String - Unique Range ID, first defined when creating  rifle range RR_fnc_iniRifleRange and passed to all subsequent functions.
+	_this select 1: String - Unique Range ID, first defined when creating a rifle range with RR_fnc_iniRifleRange and passed to all subsequent functions.
 
 	Returns:
 	Nothing

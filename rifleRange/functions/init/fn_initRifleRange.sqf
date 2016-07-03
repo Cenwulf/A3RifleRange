@@ -65,30 +65,30 @@ for "_i" from 1 to (missionNamespace getVariable format ["%1_LANE_COUNT", _range
 		_array = _varName splitString "_";
 
 		if (count _array != 4) then {
-			diag_log format ["ERROR: ""%1"" - Target ""%2"" incorrect vehicleVarName format.",SELF,_x];
-		};
+			//diag_log format ["ERROR: ""%1"" - Target ""%2"" incorrect vehicleVarName format.",SELF,_x];
+		} else {
+			_rangeIDTarg = _array select 0;
+			_laneIDTarg = _array select 1;
 
-		_rangeIDTarg = _array select 0;
-		_laneIDTarg = _array select 1;
+			_laneIDArray = _laneIDTarg splitString "";
 
-		_laneIDArray = _laneIDTarg splitString "";
+			if (_rangeID == _rangeIDTarg && {count _laneIDArray == 2 && {_laneIDArray select 0 == "l"}}) then {
+				_x addEventHandler ["hit", {_this call RR_fnc_targetHit;}];
+				_x setVariable ["hitNumber",0];
+				_x setObjectTextureGlobal [0,"rifleRange\textures\figure11.paa"];
 
-		if (_rangeID == _rangeIDTarg && {count _laneIDArray == 2 && {_laneIDArray select 0 == "l"}}) then {
-			_x addEventHandler ["hit", {_this call RR_fnc_targetHit;}];
-			_x setVariable ["hitNumber",0];
-			_x setObjectTextureGlobal [0,"rifleRange\textures\figure11.paa"];
+				missionNamespace getVariable format ["%1_ALL_TARGETS",_rangeID] pushBack _x;
 
-			missionNamespace getVariable format ["%1_ALL_TARGETS",_rangeID] pushBack _x;
-
-			_laneNumber = parseNumber (_laneIDArray select 1);
-			_index = _laneNumber - 1;
-			missionNamespace getVariable format ["%1_TARGETS_BY_LANE",_rangeID] select _index pushBack _x;
-			_distTarg = switch (_array select 2) do {
-				case "c": {0};
-				case "m": {1};
-				case "f": {2};
+				_laneNumber = parseNumber (_laneIDArray select 1);
+				_index = _laneNumber - 1;
+				missionNamespace getVariable format ["%1_TARGETS_BY_LANE",_rangeID] select _index pushBack _x;
+				_distTarg = switch (_array select 2) do {
+					case "c": {0};
+					case "m": {1};
+					case "f": {2};
+				};
+				missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _index select _distTarg pushBack _x;
 			};
-			missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _index select _distTarg pushBack _x;
 		};
 	};
 } forEach (allMissionObjects "TargetBase");
