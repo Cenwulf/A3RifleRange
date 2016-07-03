@@ -22,7 +22,7 @@ params [["_rangeID","",[""]],["_laneIndex",0,[0]],["_time",0,[0]],["_program",[]
 _primary = if (isNil format ["%1_loudspeaker", _rangeID]) then {false} else {_primary};
 
 if (_primary) then {
-	["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],5] call RR_fnc_PlayMissionSound3D;
+	["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
 };
 
 {
@@ -59,7 +59,7 @@ if (_primary) then {
 	};
 
 	if (_primary && _buzzer) then {
-		["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],5] call RR_fnc_playMissionSound3D;
+		["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_playMissionSound3D;
 	};
 
 	_time = _time + _interval;
@@ -76,7 +76,7 @@ missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneInd
 missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex set [2,false]; // reset = false
 
 if (_primary) then {
-	["rifleRange\sounds\BUZZER_ARENA_LONG.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],5] call RR_fnc_playMissionSound3D;
+	["rifleRange\sounds\BUZZER_ARENA_LONG.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_playMissionSound3D;
 };
 
 // update high score
