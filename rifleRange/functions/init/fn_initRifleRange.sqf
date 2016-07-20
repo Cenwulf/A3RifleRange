@@ -15,7 +15,7 @@ scriptName "fn_initRifleRange";
 	Notes:
 	Range types:	"ETR" - Electronic Training Range - Narrow, multi-lane range with few targets per range.
 					"IBSR" - Individual Battle Skills Range - Large range suitable for single firer or firer + spotter.
-					"HBSR" - Hollywood Bull-Shit Range - An odd combination of the above that most people (myself included) first think of when they hear the phrase rifle range.
+					"QBSR" - Questionably Bull-Shit Range - An odd combination of the above that most people (myself included) first think of when they hear the phrase rifle range.
 */
 #define SELF RR_fnc_initRifleRange
 
@@ -38,7 +38,21 @@ if (isNil "RR_RANGE_IDS") then {
 RR_RANGE_IDS pushBack _rangeID;
 publicVariable "RR_RANGE_IDS";
 
-missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],format ["%1_default",_rangeType]];
+// Define available drills based on rangeType (Fomat: [["DISPLAY NAME","DRILL ID"]])
+// NOTE: Define name only, string will be used to select specific drill predefined in fn_startFiringDrill
+
+_drills = switch (_rangeType) do {
+	case "ETR": {[["ACMT (LDS)","ETR_default"],["ACMT (Ironsights)","ETR_ironsight"],["Phase 1","ETR_phase1"]]};
+	case "IBSR": {[["IBSR (Default)","IBSR_default"]]};
+	case "QBSR": {[["QBSR (Default)","QBSR_default"]]};
+};
+
+missionNamespace setVariable [format ["%1_DRILLS",_rangeID],_drills];
+
+// Define range properties
+
+missionNamespace setVariable [format ["%1_RANGE_TYPE",_rangeID],_rangeType];
+missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],missionNamespace getVariable format ["%1_DRILLS",_rangeID] select 0 select 1];
 
 missionNamespace setVariable [format ["%1_LANE_COUNT",_rangeID],5,true]; // lane count subject to change
 
@@ -58,6 +72,8 @@ for "_i" from 1 to (missionNamespace getVariable format ["%1_LANE_COUNT", _range
 		missionNamespace getVariable format ["%1_l%2_sign",_rangeID,_i] setObjectTextureGlobal [0,format ["rifleRange\textures\laneSign%1.paa",_i]];
 	};
 };
+
+// Find and list all targets associated with range based on target vehicleVarName
 
 {
 	_varName = vehicleVarName _x;
@@ -105,6 +121,6 @@ for "_i" from 1 to (missionNamespace getVariable format ["%1_LANE_COUNT", _range
 
 publicVariable format ["%1_STATES_ARRAY",_rangeID];
 
-missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],false];
+missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],false,true];
 
 missionNamespace setVariable [format ["%1_INIT_DONE", _rangeID],true,true];

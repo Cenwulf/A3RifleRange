@@ -21,6 +21,14 @@ params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams"
 
 _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
-_laneIndecies params [["_laneIndex",0,[0]]];
+private ["_condtion"];
 
-!(missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] select _laneIndex select 3 == -1)
+_condtion = false;
+
+{
+	if (missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] select _x select 3 != -1) exitWith {
+		_condtion = true;
+	};
+} forEach _laneIndecies;
+
+_condtion

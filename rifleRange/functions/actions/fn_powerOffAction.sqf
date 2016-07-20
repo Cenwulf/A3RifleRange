@@ -49,3 +49,5 @@ if (typeOf (missionNameSpace getVariable format ["%1_CONTROL_OBJ",_rangeID]) == 
 		diag_log format ["ERROR: ""%1"" - Lane Index ""%2"" does not exist.",SELF,_x];
 	};
 } forEach _laneIndecies;
+
+missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],missionNamespace getVariable format ["%1_DRILLS",_rangeID] select 0 select 1];
