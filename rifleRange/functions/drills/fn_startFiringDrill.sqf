@@ -27,7 +27,7 @@ _drill = missionNamespace getVariable format ["%1_CURRENT_DRILL",_rangeID];
 
 _program = [];
 
-_startTime = serverTime;
+_startTime = time;
 
 switch (_drill) do {
 	case "ETR_default": {
@@ -51,7 +51,7 @@ switch (_drill) do {
 			[0,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
 		];
 
-		_startTime = serverTime + 2;
+		_startTime = time + 2;
 	};
 	case "ETR_ironsights": {
 		_targTime = 8; 			// time a target is raised for
@@ -73,7 +73,7 @@ switch (_drill) do {
 			[0,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
 		];
 
-		_startTime = serverTime + 2;
+		_startTime = time + 2;
 	};
 	case "ETR_phase1": {
 		_targTime = 8; 			// time a target is raised for
@@ -95,7 +95,7 @@ switch (_drill) do {
 			[0,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
 		];
 
-		_startTime = serverTime + 2;
+		_startTime = time + 2;
 	};
 	case "ETR_classic": {
 		_targTime = 8; 			// time a target is raised for
@@ -118,7 +118,7 @@ switch (_drill) do {
 			[0,0,_hitsPerTarg,_targTime,_targInterval,false]			// 250m kneeling
 		];
 
-		_startTime = serverTime + 2;
+		_startTime = time + 2;
 	};
 };
 
