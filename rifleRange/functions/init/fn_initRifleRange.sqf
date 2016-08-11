@@ -47,12 +47,13 @@ _drills = switch (_rangeType) do {
 	case "QBSR": {[["QBSR (Default)","QBSR_default"]]};
 };
 
-missionNamespace setVariable [format ["%1_DRILLS",_rangeID],_drills];
+missionNamespace setVariable [format ["%1_DRILLS",_rangeID],_drills,true];
+
 
 // Define range properties
 
 missionNamespace setVariable [format ["%1_RANGE_TYPE",_rangeID],_rangeType];
-missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],missionNamespace getVariable format ["%1_DRILLS",_rangeID] select 0 select 1];
+missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],missionNamespace getVariable format ["%1_DRILLS",_rangeID] select 0 select 1,true];
 
 missionNamespace setVariable [format ["%1_LANE_COUNT",_rangeID],5,true]; // lane count subject to change
 
@@ -118,9 +119,11 @@ for "_i" from 1 to (missionNamespace getVariable format ["%1_LANE_COUNT", _range
 	} forEach _x;
 } forEach (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID]);
 */
-
+// publivVariable variables required by client
 publicVariable format ["%1_STATES_ARRAY",_rangeID];
 
+
+// finalise init
 missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],false,true];
 
 missionNamespace setVariable [format ["%1_INIT_DONE", _rangeID],true,true];

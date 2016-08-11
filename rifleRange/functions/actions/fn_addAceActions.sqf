@@ -98,9 +98,9 @@ _actionSelectDrill = [format ["%1SelectDrill",_rangeID],"Select Firing Drill","\
 {
 	_x params [["_actionName","",[""]],["_drillID","",[""]]];
 
-	_actionDrill = [format ["%1_%2",_rangeID,_drillID],_actionName,"rifleRange\textures\icons\checkempty.paa",{missionNamespace setVariable [format ["%1_CURRENT_DRILL",_this select 2 select 0],_this select 2 select 2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] != _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
+	_actionDrill = [format ["%1_%2",_rangeID,_drillID],_actionName,"rifleRange\textures\icons\checkempty.paa",{missionNamespace setVariable [format ["%1_CURRENT_DRILL",_this select 2 select 0],_this select 2 select 2,true]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] != _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
 
-	_actionDrillCurrent = [format ["%1_%2_c",_rangeID,_drillID],/*format ["<t color='#008000'>%1</t>",_actionName]*/_actionName,"rifleRange\textures\icons\check.paa",{missionNamespace setVariable [format ["%1_CURRENT_DRILL",_this select 2 select 0],_this select 2 select 2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] == _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
+	_actionDrillCurrent = [format ["%1_%2_c",_rangeID,_drillID],/*format ["<t color='#008000'>%1</t>",_actionName]*/_actionName,"rifleRange\textures\icons\check.paa",{missionNamespace setVariable [format ["%1_CURRENT_DRILL",_this select 2 select 0,true],_this select 2 select 2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] == _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
 
 	[_obj,0,["ACE_MainActions",format ["%1SelectDrill",_rangeID]],_actionDrill] call ace_interact_menu_fnc_addActionToObject;
 

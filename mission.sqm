@@ -12,10 +12,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={23915.098,16.695208,18183.361};
-		dir[]={0.73264652,-0.62367684,0.27296638};
-		up[]={0.58442444,0.7816965,0.21774311};
-		aside[]={0.3491683,2.2711465e-006,-0.93718225};
+		pos[]={23887.363,47.24255,18172.156};
+		dir[]={0.69694936,-0.63478148,0.33401757};
+		up[]={0.57242596,0.77270776,0.27433982};
+		aside[]={0.4322328,2.4468172e-006,-0.90188873};
 	};
 };
 binarizationWanted=0;
@@ -51,7 +51,7 @@ class AddonsMetaData
 		class Item0
 		{
 			className="A3_Structures_F";
-			name="Arma 3 Alpha - Buildings and structures";
+			name="Arma 3 - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="http://www.arma3.com";
 		};
@@ -65,12 +65,14 @@ class AddonsMetaData
 		class Item2
 		{
 			className="ace_sitting";
-			name="ace_sitting";
+			name="ACE3 - Sitting";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
 		};
 		class Item3
 		{
 			className="A3_Structures_F_Mark";
-			name="Arma 3 Marksmen - Buildings and structures";
+			name="Arma 3 Marksmen - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="http://www.arma3.com";
 		};
@@ -97,33 +99,41 @@ class AddonsMetaData
 		};
 		class Item7
 		{
-			className="ace_realisticnames";
-			name="ace_realisticnames";
+			className="16aa_ammo";
+			name="16aa_ammo";
 		};
 		class Item8
 		{
-			className="ace_fcs";
-			name="ace_fcs";
+			className="ace_smallarms";
+			name="ACE3 - Small Arms";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
 		};
 		class Item9
 		{
-			className="ace_smallarms";
-			name="ace_smallarms";
+			className="LSR_tracers";
+			name="LSR_tracers";
 		};
 		class Item10
 		{
 			className="ace_ballistics";
-			name="ace_ballistics";
+			name="ACE3 - Ballistics";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
 		};
 		class Item11
 		{
 			className="ace_attach";
-			name="ace_attach";
+			name="ACE3 - Attach";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
 		};
 		class Item12
 		{
 			className="ace_medical";
-			name="ace_medical";
+			name="ACE3 - Medical";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
 		};
 	};
 };
@@ -171,6 +181,10 @@ class Mission
 		forecastWind=0.1;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
+		rainForced=1;
+		lightningsForced=1;
+		wavesForced=1;
+		windForced=1;
 		year=2035;
 		month=6;
 		day=24;

@@ -29,13 +29,19 @@ _program = [];
 
 _startTime = time;
 
+_targTimeDefault = 8; 			// time a target is raised for
+_targIntervalDefault = 2; 		// time before next target
+_targIntervalP2KDefault = 5; 	// time before next target when switching from prone to kneeling
+_targInterval50Default = 14; 	// time before next target when advancing 50m
+_targInterval100Default = 26; 	// time before next target when advancing 100m
+
 switch (_drill) do {
 	case "ETR_default": {
-		_targTime = 8; 			// time a target is raised for
-		_targInterval = 2; 		// time before next target
-		_targIntervalP2K = 5; 	// time before next target when switching from prone to kneeling
-		_targInterval50 = 14; 	// time before next target when advancing 50m
-		_targInterval100 = 26; 	// time before next target when advancing 100m
+		_targTime = _targTimeDefault;
+		_targInterval = _targIntervalDefault;
+		_targIntervalP2K = _targIntervalP2KDefault;
+		_targInterval50 = _targInterval50Default;
+		_targInterval100 = _targInterval100Default;
 
 		_hitsPerTarg = 5;
 
@@ -54,11 +60,11 @@ switch (_drill) do {
 		_startTime = time + 2;
 	};
 	case "ETR_ironsights": {
-		_targTime = 8; 			// time a target is raised for
-		_targInterval = 2; 		// time before next target
-		_targIntervalP2K = 5; 	// time before next target when switching from prone to kneeling
-		_targInterval50 = 14; 	// time before next target when advancing 50m
-		_targInterval100 = 26; 	// time before next target when advancing 100m
+		_targTime = _targTimeDefault;
+		_targInterval = _targIntervalDefault;
+		_targIntervalP2K = _targIntervalP2KDefault;
+		_targInterval50 = _targInterval50Default;
+		_targInterval100 = _targInterval100Default;
 
 		_hitsPerTarg = 5;
 
@@ -76,23 +82,24 @@ switch (_drill) do {
 		_startTime = time + 2;
 	};
 	case "ETR_phase1": {
-		_targTime = 8; 			// time a target is raised for
-		_targInterval = 2; 		// time before next target
-		_targIntervalP2K = 5; 	// time before next target when switching from prone to kneeling
-		_targInterval50 = 14; 	// time before next target when advancing 50m
-		_targInterval100 = 26; 	// time before next target when advancing 100m
+		_targTime = _targTimeDefault;
+		_targInterval = _targIntervalDefault;
+		_targIntervalP2K = _targIntervalP2KDefault;
+		_targInterval50 = _targInterval50Default;
+		_targInterval100 = _targInterval100Default;
 
 		_hitsPerTarg = 5;
 
 		_program = [
+			[2,0,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
 			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m prone
 			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
 			[0,0,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
 			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
 			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
 			[0,0,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
-			[0,0,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 50m prone, switch to kneeling
-			[0,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
+			[1,0,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 150m Standing, switch to kneeling
+			[2,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 250m kneeling
 		];
 
 		_startTime = time + 2;

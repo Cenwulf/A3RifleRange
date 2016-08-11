@@ -101,7 +101,7 @@ waitUntil {missionNamespace getVariable [format ["%1_INIT_DONE", _rangeID],false
 
 missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], [[[_l1Score1,_l1Score10],[_l1HighScore1,_l1HighScore10]],[[_l2Score1,_l2Score10],[_l2HighScore1,_l2HighScore10]],[[_l3Score1,_l3Score10],[_l3HighScore1,_l3HighScore10]],[[_l4Score1,_l4Score10],[_l4HighScore1,_l4HighScore10]],[[_l5Score1,_l5Score10],[_l5HighScore1,_l5HighScore10]]]]; // placeholder until dynamic scoreboard creation is up and running
 
-publicVariable format ["%1_DIGITS_ARRAY",_rangeID];
+// publicVariable format ["%1_DIGITS_ARRAY",_rangeID];
 
 // TODO1: Enable dynamic placement of between 1 and 5 lanes by selectively disabling lanes on scoreboard (make a number of different textures for taped over scoreboad digits).
 // TODO2: Dynamic placement of scoreboard rows to allow for flexibility in number of lanes.

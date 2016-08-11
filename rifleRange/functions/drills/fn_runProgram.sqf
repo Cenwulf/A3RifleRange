@@ -41,9 +41,9 @@ if (_primary) then {
 	_targ setVariable ["isActive",true]; // now registers hits
 	_targ setVariable ["isScoring",true]; // hits add to score
 
-	waitUntil {_targ getVariable "hitNumber" >= _hits || time >= _time || missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex select 1};
+	waitUntil {_targ getVariable "hitNumber" >= _hits || time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)};
 
-	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 1 || !(missionNamespace getVariable format ["%1_POWER_ON",_rangeID])) exitWith {
+	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
 	};
 
@@ -52,9 +52,9 @@ if (_primary) then {
 
 	_targ animate ["Terc",1]; // lower target
 
-	waitUntil {time >= _time || missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex select 1};
+	waitUntil {time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)};
 
-	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 1 || !(missionNamespace getVariable format ["%1_POWER_ON",_rangeID])) exitWith {
+	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
 	};
 
@@ -64,9 +64,9 @@ if (_primary) then {
 
 	_time = _time + _interval;
 
-	waitUntil {time >= _time || missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex select 1};
+	waitUntil {time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)};
 
-	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 1 || !(missionNamespace getVariable format ["%1_POWER_ON",_rangeID])) exitWith {
+	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
 	};
 } forEach _program;
