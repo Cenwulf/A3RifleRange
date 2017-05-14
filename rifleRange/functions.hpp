@@ -3,8 +3,10 @@ class RifleRangeFunctions {
 	class ACE3Actions {
 		file = "rifleRange\functions\actions";
 		class addAceActions {};
+		class addActions {};
 		class clearCondition {};
 		class clearHighScoreAction {};
+		class drillSelectAction {};
 		class powerCondition {};
 		class powerOffAction {};
 		class powerOnAction {};
@@ -24,10 +26,14 @@ class RifleRangeFunctions {
 	};
 	class Init {
 		file = "rifleRange\functions\init";
+		class createRifleRange {};
+		class createRifleRangeETR {};
+		class createLaneDivider {};
 		class initRifleRange {};
 	};
 	class Misc {
 		file = "rifleRange\functions\misc";
+		class setWhiteboardTexture {};
 	};
 	class Scoreboard {
 		file = "rifleRange\functions\scoreboard";

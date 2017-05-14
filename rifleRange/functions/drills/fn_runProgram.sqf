@@ -32,7 +32,7 @@ if (_primary) then {
 
 	_time = _time + _upTime;
 
-	_targ = missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex select _targIndex;
+	_targ = if (_targIndex == -1) then {missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex select floor random count (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex)} else {missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex select _targIndex};
 
 	_targ setVariable ["hitNumber",0]; // reset hit counter on target
 

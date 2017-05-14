@@ -28,6 +28,6 @@ Sleep 0.5;
 		missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] select _x set [1, -1];
 		[_rangeID,_x,false,true] call RR_fnc_refreshScores;
 	} else {
-		diag_log format ["ERROR: ""%1"" - Lane index ""%2"" does not exist.",SELF,_x];
+		diag_log format ["ERROR: fn_ClearHighScoreAction.sqf - Lane Index ""%1"" does not exist.",_x];
 	};
 } forEach _laneIndecies;

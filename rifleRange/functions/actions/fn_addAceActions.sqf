@@ -14,6 +14,10 @@ scriptName "fn_addAceActions";
 */
 #define SELF RR_fnc_addAceActions
 
+if (isNil "ace_interact_menu_fnc_createAction") exitWith {
+	_this call RR_fnc_addActions;
+};
+
 params [["_obj",objNull,[objNull]],["_rangeID","",[""]]];
 
 private ["_laneIndecies","_actionLane","_actionStart","_actionStop","_actionReset","_actionClearHighScore","_actionPowerOn","_actionPowerOff","_actionName"];
@@ -51,7 +55,7 @@ for "_n" from 1 to (missionNameSpace getVariable format ["%1_LANE_COUNT",_rangeI
 
 		_actionReset = [format ["%1%2Reset",_rangeID,_n],"Reset","rifleRange\textures\icons\reset.paa",{_this remoteExec ["RR_fnc_ResetAction",2]},{_this call RR_fnc_resetCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
 
-		_actionClearHighScore = [format ["%1%2Clear",_rangeID,_n],"Clear Highscore","rifleRange\textures\icons\clear.paa",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{_this call RR_fnc_clearCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
+		_actionClearHighScore = [format ["%1%2Clear",_rangeID,_n],"Clear High-score","rifleRange\textures\icons\clear.paa",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{_this call RR_fnc_clearCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
 
 		[_obj,0,["ACE_MainActions"],_actionLane] call ace_interact_menu_fnc_addActionToObject;
 
@@ -77,7 +81,7 @@ _actionStop = [format ["%1AllStop",_rangeID],"Stop","rifleRange\textures\icons\s
 
 _actionReset = [format ["%1AllReset",_rangeID],"Reset","rifleRange\textures\icons\reset.paa",{_this remoteExec ["RR_fnc_ResetAction",2]},{_this call RR_fnc_resetCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
-_actionClearHighScore = [format ["%1AllClear",_rangeID],"Clear Highscores","rifleRange\textures\icons\clear.paa",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{_this call RR_fnc_clearCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+_actionClearHighScore = [format ["%1AllClear",_rangeID],"Clear High-scores","rifleRange\textures\icons\clear.paa",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{_this call RR_fnc_clearCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
 [_obj,0,["ACE_MainActions"],_actionLane] call ace_interact_menu_fnc_addActionToObject;
 
@@ -98,9 +102,9 @@ _actionSelectDrill = [format ["%1SelectDrill",_rangeID],"Select Firing Drill","\
 {
 	_x params [["_actionName","",[""]],["_drillID","",[""]]];
 
-	_actionDrill = [format ["%1_%2",_rangeID,_drillID],_actionName,"rifleRange\textures\icons\checkempty.paa",{missionNamespace setVariable [format ["%1_CURRENT_DRILL",_this select 2 select 0],_this select 2 select 2,true]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] != _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
+	_actionDrill = [format ["%1_%2",_rangeID,_drillID],_actionName,"rifleRange\textures\icons\checkempty.paa",{_this remoteExec ["RR_fnc_drillSelectAction",2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] != _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
 
-	_actionDrillCurrent = [format ["%1_%2_c",_rangeID,_drillID],/*format ["<t color='#008000'>%1</t>",_actionName]*/_actionName,"rifleRange\textures\icons\check.paa",{missionNamespace setVariable [format ["%1_CURRENT_DRILL",_this select 2 select 0,true],_this select 2 select 2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] == _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
+	_actionDrillCurrent = [format ["%1_%2_c",_rangeID,_drillID],/*format ["<t color='#008000'>%1</t>",_actionName]*/_actionName,"rifleRange\textures\icons\check.paa",{},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] == _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
 
 	[_obj,0,["ACE_MainActions",format ["%1SelectDrill",_rangeID]],_actionDrill] call ace_interact_menu_fnc_addActionToObject;
 

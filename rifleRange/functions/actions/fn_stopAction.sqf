@@ -31,6 +31,6 @@ _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 			publicVariable format ["%1_STATES_ARRAY",_rangeID];
 		};
 	} else {
-		diag_log format ["ERROR: fn_resetAction.sqf - Lane Index ""%1"" does not exist.",_x];
+		diag_log format ["ERROR: fn_stopAction.sqf - Lane Index ""%1"" does not exist.",_x];
 	};
 } forEach _laneIndecies;

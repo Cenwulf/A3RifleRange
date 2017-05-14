@@ -8,9 +8,10 @@ scriptName "fn_initRifleRange";
 	Parameter(s):
 	_this select 0: String - Unique Range ID used to identify the range and all its components, passed to all subsequent functions.
 	_this select 1: String - Range type, needs to match one of the standard range types listed below.
+	_this select 2: Number - Number of lanes on range.
 
 	Returns:
-	Nothing
+	String - RangeID in case of modification.
 
 	Notes:
 	Range types:	"ETR" - Electronic Training Range - Narrow, multi-lane range with few targets per range.
@@ -28,18 +29,26 @@ scriptName "fn_initRifleRange";
 */
 
 if !isServer exitWith {};
+params [["_rangeID","",[""]],["_rangeType","ETR",[""]],["_laneCount",5,[0]]];
 
-params [["_rangeID","",[""]],["_rangeType","ETR",[""]]];
+sleep random 0.5;
 
 if (isNil "RR_RANGE_IDS") then {
 	RR_RANGE_IDS = [];
+};
+
+if (_rangeID in RR_RANGE_IDS) then {
+	for "_i" from 0 to 99 do {
+		_rangeID = format ["%1_%2", _rangeID, _i];
+		if !(_rangeID in RR_RANGE_IDS) exitWith {};
+	};
 };
 
 RR_RANGE_IDS pushBack _rangeID;
 publicVariable "RR_RANGE_IDS";
 
 // Define available drills based on rangeType (Fomat: [["DISPLAY NAME","DRILL ID"]])
-// NOTE: Define name only, string will be used to select specific drill predefined in fn_startFiringDrill
+// NOTE: Define name only, string will be used to select specific drill predefined in fn_startFiringDrill.sqf
 
 _drills = switch (_rangeType) do {
 	case "ETR": {[["ACMT (LDS)","ETR_default"],["ACMT (Ironsights)","ETR_ironsight"],["Phase 1","ETR_phase1"]]};
@@ -49,13 +58,12 @@ _drills = switch (_rangeType) do {
 
 missionNamespace setVariable [format ["%1_DRILLS",_rangeID],_drills,true];
 
-
 // Define range properties
 
 missionNamespace setVariable [format ["%1_RANGE_TYPE",_rangeID],_rangeType];
 missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],missionNamespace getVariable format ["%1_DRILLS",_rangeID] select 0 select 1,true];
 
-missionNamespace setVariable [format ["%1_LANE_COUNT",_rangeID],5,true]; // lane count subject to change
+missionNamespace setVariable [format ["%1_LANE_COUNT",_rangeID],_laneCount,true];
 
 missionNamespace setVariable [format ["%1_SCORES_ARRAY",_rangeID],[]];
 missionNamespace setVariable [format ["%1_STATES_ARRAY",_rangeID],[]];
@@ -72,6 +80,12 @@ for "_i" from 1 to (missionNamespace getVariable format ["%1_LANE_COUNT", _range
 	if !(isNil format ["%1_l%2_sign",_rangeID,_i]) then {
 		missionNamespace getVariable format ["%1_l%2_sign",_rangeID,_i] setObjectTextureGlobal [0,format ["rifleRange\textures\laneSign%1.paa",_i]];
 	};
+};
+
+// If whiteboard object exists set texture for current firing drill
+
+if (!isNull (missionNamespace getVariable [format ["%1_WHITEBOARD_OBJECT", _rangeID], objNull])) then {
+	[_rangeID, missionNamespace getVariable format ["%1_CURRENT_DRILL",_rangeID]] call RR_fnc_setWhiteboardTexture;
 };
 
 // Find and list all targets associated with range based on target vehicleVarName

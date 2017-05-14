@@ -21,6 +21,8 @@ params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams"
 
 _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
+private "_condition";
+
 _condition = true;
 
 {

@@ -35,6 +35,11 @@ _targIntervalP2KDefault = 5; 	// time before next target when switching from pro
 _targInterval50Default = 14; 	// time before next target when advancing 50m
 _targInterval100Default = 26; 	// time before next target when advancing 100m
 
+_targIndex = if (count (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select 0 select 0) > 1) then {-1} else {0};
+
+// Define custom drills here with a unique string for each case, add this string to the drills array fn_initRifleRange function.
+// NOTE: User is unable to switch drill in game without using ACE3 actions, if using vanilla only modify the "ETR_default" drill
+
 switch (_drill) do {
 	case "ETR_default": {
 		_targTime = _targTimeDefault;
@@ -45,16 +50,24 @@ switch (_drill) do {
 
 		_hitsPerTarg = 5;
 
+		// _distIndex - targets are grouped, 0 = 100m targets, 1 = 200m targets, 2 = 300m targets
+		// _targIndext - only used if there are multiple targets at each distance (current range design only has 1 target at each distance so this is not used)
+		// _hitsPerTarg - number of hits before target goes down
+		// _upTime - amount of time target stays up for
+		// _interval - amount of time before next target once _upTime has elapsed
+		// _buzzer - dictates whether the buzzer should sound at the end of this targets _upTime (used to signal shooter to move or change stance)
+
 		_program = [
-			[2,0,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
-			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m prone
-			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
-			[0,0,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
-			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
-			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
-			[0,0,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
-			[0,0,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 50m prone, switch to kneeling
-			[0,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
+		//	[_distIndex,_targIndex,_upTime,_interval,_buzzer]
+			[2,_targIndex,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
+			[2,_targIndex,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m prone
+			[1,_targIndex,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
+			[0,_targIndex,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
+			[1,_targIndex,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
+			[0,_targIndex,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 50m prone, switch to kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
 		];
 
 		_startTime = time + 2;
@@ -69,14 +82,14 @@ switch (_drill) do {
 		_hitsPerTarg = 5;
 
 		_program = [
-			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m prone
-			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
-			[0,0,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
-			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
-			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
-			[0,0,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
-			[0,0,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 50m prone, switch to kneeling
-			[0,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
+			[2,_targIndex,10,_targTime-1,_targInterval,false],			// 300m prone
+			[1,_targIndex,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
+			[0,_targIndex,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
+			[1,_targIndex,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
+			[0,_targIndex,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 50m prone, switch to kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime-5,_targInterval,false]			// 50m kneeling
 		];
 
 		_startTime = time + 2;
@@ -91,15 +104,15 @@ switch (_drill) do {
 		_hitsPerTarg = 5;
 
 		_program = [
-			[2,0,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
-			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m prone
-			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
-			[0,0,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
-			[2,0,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
-			[1,0,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
-			[0,0,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
-			[1,0,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 150m Standing, switch to kneeling
-			[2,0,_hitsPerTarg,_targTime-5,_targInterval,false]			// 250m kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
+			[2,_targIndex,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m prone
+			[1,_targIndex,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m prone
+			[0,_targIndex,_hitsPerTarg,_targTime-3,_targIntervalP2K,true],		// 100m prone, switch to kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime-1,_targInterval,false],			// 300m kneeling
+			[1,_targIndex,_hitsPerTarg,_targTime-2,_targInterval,false],			// 200m kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime-3,_targInterval50,true],		// 100m kneeling, advance to 50m firing position
+			[1,_targIndex,_hitsPerTarg,_targTime-5,_targIntervalP2K,true],		// 150m Standing, switch to kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime-5,_targInterval,false]			// 250m kneeling
 		];
 
 		_startTime = time + 2;
@@ -114,15 +127,15 @@ switch (_drill) do {
 		_hitsPerTarg = 5;
 
 		_program = [
-			[2,0,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
-			[2,0,_hitsPerTarg,_targTime,_targInterval,false],			// 300m prone
-			[1,0,_hitsPerTarg,_targTime,_targInterval,false],			// 200m prone
-			[0,0,_hitsPerTarg,_targTime,_targIntervalP2K,true],			// 100m prone, switch to kneeling
-			[2,0,_hitsPerTarg,_targTime,_targInterval,false],			// 300m kneeling
-			[1,0,_hitsPerTarg,_targTime,_targInterval,false],			// 200m kneeling
-			[0,0,_hitsPerTarg,_targTime,_targInterval50,true],			// 100m kneeling, advance to 50m firing position
-			[0,0,_hitsPerTarg,_targTime,_targIntervalP2K,true],			// 150m standing, switch to kneeling
-			[0,0,_hitsPerTarg,_targTime,_targInterval,false]			// 250m kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime,_targInterval100,true],			// 400m prone, advance to main firing position
+			[2,_targIndex,_hitsPerTarg,_targTime,_targInterval,false],			// 300m prone
+			[1,_targIndex,_hitsPerTarg,_targTime,_targInterval,false],			// 200m prone
+			[0,_targIndex,_hitsPerTarg,_targTime,_targIntervalP2K,true],			// 100m prone, switch to kneeling
+			[2,_targIndex,_hitsPerTarg,_targTime,_targInterval,false],			// 300m kneeling
+			[1,_targIndex,_hitsPerTarg,_targTime,_targInterval,false],			// 200m kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime,_targInterval50,true],			// 100m kneeling, advance to 50m firing position
+			[0,_targIndex,_hitsPerTarg,_targTime,_targIntervalP2K,true],			// 150m standing, switch to kneeling
+			[0,_targIndex,_hitsPerTarg,_targTime,_targInterval,false]			// 250m kneeling
 		];
 
 		_startTime = time + 2;
