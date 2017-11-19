@@ -29,20 +29,20 @@ if (_targ getVariable ["isActive",false]) then {
 
 	if (_targ getVariable ["isScoring",false]) then {
 
-		_targVarName = vehicleVarName _targ;
+		private _targVarName = vehicleVarName _targ;
 
-		_varNameArray = _targVarName splitString "_";
+		private _rangeID = _targ getVariable ["rangeID",""];
 
-		_rangeID = _varNameArray select 0;
+		private _scoreGroup =  _targ getVariable ["scoreGroup",-1];
 
-		_laneIDArray = (_varNameArray select 1) splitString "";
+		Private _scoreGroupIndex = _scoreGroup - 1;
 
-		_laneNumb = parseNumber (_laneIDArray select 1);
+		private _distIndex = if (1 > _scoreGroup || _scoreGroup > 5) then {_targ getVariable ["distIndex",0]} else {_scoreGroupIndex};
 
-		_laneIndex = _laneNumb - 1;
+		private _laneIndex = _targ getVariable ["laneIndex",0];
 
 		if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) then {
-			[_rangeID,_laneIndex,1] call RR_fnc_addScore;
+			[_rangeID,_laneIndex,_distIndex,1] call RR_fnc_addScore;
 		};
 	};
 };

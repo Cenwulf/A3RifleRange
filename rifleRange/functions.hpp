@@ -6,18 +6,30 @@ class RifleRangeFunctions {
 		class addActions {};
 		class clearCondition {};
 		class clearHighScoreAction {};
+		class connectHeadsetAction {};
+		class connectHeadsetCondition {};
+		//class disconnectHeadsetAction {};
+		class disconnectHeadsetCondition {};
 		class drillSelectAction {};
+		class muteSpeakerAction {};
+		class muteSpeakerCondition {};
 		class powerCondition {};
 		class powerOffAction {};
 		class powerOnAction {};
 		class resetAction {};
 		class resetCondition {};
+		class speakerSettingsCondition {};
+		class speakerSettingsMutedCondition {};
+		class setDelayAction {};
+		class setDelayCondition {};
 		class startAction {};
 		class startCondition {};
 		class stopAction {};
 		class stopCondition {};
 		class testSpeakerAction {};
 		class testSpeakerCondition {};
+		class unmuteSpeakerAction {};
+		class unmuteSpeakerCondition {};
 	};
 	class Drills {
 		file = "rifleRange\functions\drills";
@@ -26,13 +38,11 @@ class RifleRangeFunctions {
 	};
 	class Init {
 		file = "rifleRange\functions\init";
-		class createRifleRange {};
-		class createRifleRangeETR {};
-		class createLaneDivider {};
 		class initRifleRange {};
 	};
 	class Misc {
 		file = "rifleRange\functions\misc";
+		class numberToArray {};
 		class setWhiteboardTexture {};
 	};
 	class Scoreboard {
@@ -46,6 +56,7 @@ class RifleRangeFunctions {
 	};
 	class Sound {
 		file = "rifleRange\functions\sounds";
+		class playHeadsetSound {};
 		class playMissionSound3D {};
 	};
 	class Targets {

@@ -28,80 +28,148 @@ scriptName "fn_createScoreboard";
 */
 #define SELF RR_fnc_createScoreboard
 
-params [["_scoreboardObj",objNull,[objNull]],["_rangeID","",[""]]];
+if !isServer exitWith {}; // NOTE: Remove if UserTextureObject_1m_F ever stops propergating over the network again
 
-private "_scoreboardDir";
-
-_scoreboardDir = getDir _scoreboardObj;
-
-_scoreboardObj setObjectTextureGlobal [0,"rifleRange\textures\board5A.paa"];
-
-// old
-
-_score1_x = 0.196289;
-_score10_x = 0.0742188;
-_highScore1_x = 0.7460932;
-_highScore10_x = 0.624023;
-
-_depth_y = -0.034;
-
-_lane1_z = 1.158946;
-_lane2_z = 0.982946;
-_lane3_z = 0.806946;
-_lane4_z = 0.630946;
-_lane5_z = 0.454946;
-
-_l1Score1_relPos =		[_score1_x,			_depth_y,	_lane1_z];
-_l1Score10_relPos =		[_score10_x,		_depth_y,	_lane1_z];
-_l1HighScore1_relPos =	[_highScore1_x,		_depth_y,	_lane1_z];
-_l1HighScore10_relPos =	[_highScore10_x,	_depth_y,	_lane1_z];
-
-_l2Score1_relPos =		[_score1_x,			_depth_y,	_lane2_z];
-_l2Score10_relPos =		[_score10_x,		_depth_y,	_lane2_z];
-_l2HighScore1_relPos =	[_highScore1_x,		_depth_y,	_lane2_z];
-_l2HighScore10_relPos =	[_highScore10_x,	_depth_y,	_lane2_z];
-
-_l3Score1_relPos =		[_score1_x,			_depth_y,	_lane3_z];
-_l3Score10_relPos =		[_score10_x,		_depth_y,	_lane3_z];
-_l3HighScore1_relPos =	[_highScore1_x,		_depth_y,	_lane3_z];
-_l3HighScore10_relPos =	[_highScore10_x,	_depth_y,	_lane3_z];
-
-_l4Score1_relPos =		[_score1_x,			_depth_y,	_lane4_z];
-_l4Score10_relPos =		[_score10_x,		_depth_y,	_lane4_z];
-_l4HighScore1_relPos =	[_highScore1_x,		_depth_y,	_lane4_z];
-_l4HighScore10_relPos =	[_highScore10_x,	_depth_y,	_lane4_z];
-
-_l5Score1_relPos =		[_score1_x,			_depth_y,	_lane5_z];
-_l5Score10_relPos =		[_score10_x,		_depth_y,	_lane5_z];
-_l5HighScore1_relPos =	[_highScore1_x,		_depth_y,	_lane5_z];
-_l5HighScore10_relPos =	[_highScore10_x,	_depth_y,	_lane5_z];
-
-_l1Score1 = [_scoreboardObj,_scoreboardDir,_l1Score1_relPos] call RR_fnc_createSBDigit;
-_l1Score10 = [_scoreboardObj,_scoreboardDir,_l1Score10_relPos] call RR_fnc_createSBDigit;
-_l1HighScore1 = [_scoreboardObj,_scoreboardDir,_l1HighScore1_relPos] call RR_fnc_createSBDigit;
-_l1HighScore10 = [_scoreboardObj,_scoreboardDir,_l1HighScore10_relPos] call RR_fnc_createSBDigit;
-_l2Score1 = [_scoreboardObj,_scoreboardDir,_l2Score1_relPos] call RR_fnc_createSBDigit;
-_l2Score10 = [_scoreboardObj,_scoreboardDir,_l2Score10_relPos] call RR_fnc_createSBDigit;
-_l2HighScore1 = [_scoreboardObj,_scoreboardDir,_l2HighScore1_relPos] call RR_fnc_createSBDigit;
-_l2HighScore10 = [_scoreboardObj,_scoreboardDir,_l2HighScore10_relPos] call RR_fnc_createSBDigit;
-_l3Score1 = [_scoreboardObj,_scoreboardDir,_l3Score1_relPos] call RR_fnc_createSBDigit;
-_l3Score10 = [_scoreboardObj,_scoreboardDir,_l3Score10_relPos] call RR_fnc_createSBDigit;
-_l3HighScore1 = [_scoreboardObj,_scoreboardDir,_l3HighScore1_relPos] call RR_fnc_createSBDigit;
-_l3HighScore10 = [_scoreboardObj,_scoreboardDir,_l3HighScore10_relPos] call RR_fnc_createSBDigit;
-_l4Score1 = [_scoreboardObj,_scoreboardDir,_l4Score1_relPos] call RR_fnc_createSBDigit;
-_l4Score10 = [_scoreboardObj,_scoreboardDir,_l4Score10_relPos] call RR_fnc_createSBDigit;
-_l4HighScore1 = [_scoreboardObj,_scoreboardDir,_l4HighScore1_relPos] call RR_fnc_createSBDigit;
-_l4HighScore10 = [_scoreboardObj,_scoreboardDir,_l4HighScore10_relPos] call RR_fnc_createSBDigit;
-_l5Score1 = [_scoreboardObj,_scoreboardDir,_l5Score1_relPos] call RR_fnc_createSBDigit;
-_l5Score10 = [_scoreboardObj,_scoreboardDir,_l5Score10_relPos] call RR_fnc_createSBDigit;
-_l5HighScore1 = [_scoreboardObj,_scoreboardDir,_l5HighScore1_relPos] call RR_fnc_createSBDigit;
-_l5HighScore10 = [_scoreboardObj,_scoreboardDir,_l5HighScore10_relPos] call RR_fnc_createSBDigit;
+params [["_scoreboardObj",objNull,[objNull]],["_rangeID","",[""]],["_scoreboardLaneID",-1,[0]]];
 
 waitUntil {missionNamespace getVariable [format ["%1_INIT_DONE", _rangeID],false]};
 
-missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], [[[_l1Score1,_l1Score10],[_l1HighScore1,_l1HighScore10]],[[_l2Score1,_l2Score10],[_l2HighScore1,_l2HighScore10]],[[_l3Score1,_l3Score10],[_l3HighScore1,_l3HighScore10]],[[_l4Score1,_l4Score10],[_l4HighScore1,_l4HighScore10]],[[_l5Score1,_l5Score10],[_l5HighScore1,_l5HighScore10]]]]; // placeholder until dynamic scoreboard creation is up and running
+private _scoreboardDir = getDir _scoreboardObj;
 
-// publicVariable format ["%1_DIGITS_ARRAY",_rangeID];
+private _laneCount = missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID];
 
-// TODO1: Enable dynamic placement of between 1 and 5 lanes by selectively disabling lanes on scoreboard (make a number of different textures for taped over scoreboad digits).
-// TODO2: Dynamic placement of scoreboard rows to allow for flexibility in number of lanes.
+private _scoreboardObjArray = [_scoreboardObj];
+
+// _scoreboardObj setVehiclePosition [getPos _scoreboardObj, [], 0, "CAN_COLLIDE"];
+
+// _scoreboardObj setVectorUp [0,0,1];
+
+if (_scoreboardLaneID < 1 && {_laneCount / 5 > 1}) then {
+	for "_i" from 1 to ((ceil (_laneCount / 5)) - 1) do {
+		// _pos = getPos (_scoreboardObjArray select 0);
+		// _pos set [2, (_pos select 2) + _i];
+		_obj = createVehicle ["SignAd_Sponsor_F", [0,0,0], [], 0, "CAN_COLLIDE"];
+		_obj setDir _scoreboardDir;
+		_obj attachTo [_scoreboardObj, [0,0,_i]];
+		_obj setVectorUp (vectorUp _scoreboardObj);
+		_scoreboardObjArray pushBack _obj;
+	};
+};
+
+reverse _scoreboardObjArray;
+
+// new
+
+// Build scoreboard coordinates
+_score1_x = 0.1351996444; // First digit of the score column
+_score10_x = 0.01312944444; // Second digit of the score column
+_highScore1_x = 0.6905574222; // First digit of the high score column
+_highScore10_x = 0.5684872222; // Second digit of the high score column
+
+_depth_y = -0.034; // depth
+
+_lane1_z = 1.120967053; // Lane 1 row hight
+_lane2_z = 0.9514512632; // Lane 2 row hight
+_lane3_z = 0.7819354737; // Lane 3 row hight
+_lane4_z = 0.6124196842; // Lane 4 row hight
+_lane5_z = 0.4429038947; // Lane 5 row hight
+
+_xArray = [[_score1_x,_score10_x],[_highScore1_x,_highScore10_x]];
+_zArray = [_lane1_z,_lane2_z,_lane3_z,_lane4_z,_lane5_z];
+
+_rowLabel_x1 = -0.3747496593;
+_rowLabel_x2 = -0.2784876444;
+
+_label_x1 = -0.6079999259; // First digit of single lane scoreboard lane label x coord
+_label_x2 = -0.5617201111; // Second digit of single lane scoreboard lane label x coord
+_label_z = 1.238609158; // Single lane scoreboard lane label z coord
+
+// build scoreboard array
+_scoreboardArray = [];
+
+// populate scoreboard array with digit texture holders
+
+
+{
+	private _scoreboardObj = _x;
+
+	_scoreboardArrayTemp = [];
+
+	_scoreBoardObjIndex = _forEachIndex;
+
+	for "_i" from 1 to 5 do {
+		_scoreboardArrayTemp pushBack [[],[]];
+	};
+
+	{
+		_zPos = _x;
+		_laneIndex = _forEachIndex;
+		{
+			_scoreColumnIndex = _forEachIndex;
+			{
+				_pos = [_x,_depth_y,_zPos];
+				_scoreboardDigit = [_scoreboardObj,_scoreboardDir,_pos] call RR_fnc_createSBDigit;
+				_scoreboardArrayTemp select _laneIndex select _scoreColumnIndex pushBack _scoreboardDigit;
+				if (_scoreboardLaneID < 1 && (_scoreBoardObjIndex * 5) + _laneIndex >= _laneCount) then {
+					missionNamespace getVariable format ["%1_UNUSED_DIGITS_ARRAY", _rangeID] pushBack _scoreboardDigit;
+				};
+			} forEach _x;
+		} forEach _xArray;
+
+		// If a multilane scoreboard create lane labels for each row
+		if (_scoreboardLaneID < 1) then {
+
+			_laneNumber = (_scoreBoardObjIndex * 5) + _laneIndex + 1;
+
+			_texArray = [_laneNumber,"Label",false] call RR_fnc_numberToTexture;
+
+			_laneLabelArray = [
+				[_scoreboardObj,_scoreboardDir,[_rowLabel_x1,_depth_y,_zPos]] call RR_fnc_createSBDigit,
+				[_scoreboardObj,_scoreboardDir,[_rowLabel_x2,_depth_y,_zPos]] call RR_fnc_createSBDigit
+			];
+
+			{
+				_x setObjectTextureGlobal [0,""];
+			} forEach _laneLabelArray;
+
+			{
+				_laneLabelArray select _forEachIndex setObjectTextureGlobal [0,_x];
+			} forEach _texArray;
+		};
+	} forEach _zArray;
+
+	{
+		_scoreboardArray pushBack _x;
+	} forEach _scoreboardArrayTemp;
+
+	_x setObjectTextureGlobal [0,"rifleRange\textures\board5a.paa"];
+} forEach _scoreboardObjArray;
+
+private _digitsArray = missionNamespace getVariable format ["%1_DIGITS_ARRAY",_rangeID];
+
+if (_scoreboardLaneID < 1) then {
+	_digitsArray pushBack _scoreboardArray;
+} else {
+	_scoreboardObj setObjectTextureGlobal [0,"rifleRange\textures\board5b.paa"];
+	_digitsArray set [_scoreboardLaneID - 1, _scoreboardArray];
+
+	// Create lane label for single lane scoreboard
+	_texArray = [_scoreboardLaneID,"LabelSmall",false] call RR_fnc_numberToTexture;
+
+	_labelDigitArray = [
+		[_scoreboardObj,_scoreboardDir,[_label_x1,_depth_y,_label_z]] call RR_fnc_createSBDigit,
+		[_scoreboardObj,_scoreboardDir,[_label_x2,_depth_y,_label_z]] call RR_fnc_createSBDigit
+	];
+
+	{
+		_x setObjectTextureGlobal [0,""];
+	} forEach _labelDigitArray;
+
+	_strArray = [_scoreboardLaneID] call RR_fnc_numberToArray;
+
+	{
+		_labelDigitArray select _forEachIndex setObjectTextureGlobal [0, _x];
+	} forEach _texArray;
+};
+
+publicVariable format ["%1_DIGITS_ARRAY",_rangeID];

@@ -1,4 +1,4 @@
-scriptName "fn_testSpeakerCondition";
+scriptName "fn_speakerSettingsCondition";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
@@ -15,10 +15,10 @@ scriptName "fn_testSpeakerCondition";
 	Returns:
 	Bool - True when condition passes, false if not.
 */
-#define SELF RR_fnc_testSpeakerCondition
+#define SELF RR_fnc_speakerSettingsCondition
 
 params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams",[],[[]]]];
 
-_customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
+_customParams params [["_rangeID","",[""]]];
 
-(missionNamespace getVariable [format ["%1_POWER_ON", _rangeID],false] && !(isNil format ["%1_loudspeaker",_rangeID]))
+(!isNil format ["%1_loudspeaker",_rangeID])

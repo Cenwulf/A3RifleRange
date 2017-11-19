@@ -29,5 +29,3 @@ _obj attachTo [_scoreboardObj,_pos];
 _obj setObjectTextureGlobal [0,"rifleRange\textures\blank.paa"];
 
 _obj
-
-// TODO: Dynamic digit creation, probably handle via new function in which case this one can be left as is.

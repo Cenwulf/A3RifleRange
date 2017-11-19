@@ -1,5 +1,6 @@
 enableSaving [false, false];
 
 if isServer then {
-	["ETR"] call RR_fnc_initRifleRange;
+	["ETR"] spawn RR_fnc_initRifleRange;
+	["ETR2","ETR",8] spawn RR_fnc_initRifleRange;
 };

@@ -21,14 +21,23 @@ params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams"
 
 _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
-private ["_condtion"];
+private _condtion = false;
 
-_condtion = false;
+private _laneCount = missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID];
+
+private _missionPath = [str missionConfigFile, 0, -15] call BIS_fnc_trimString;
+
+private _texturePath = _missionPath + "rifleRange\textures\dash.paa";
 
 {
-	if (missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] select _x select 3 != -1) exitWith {
-		_condtion = true;
+	_scoreBaordTemp = _x;
+	if (_forEachIndex >= _laneCount) then {
+		{
+			if (getObjectTextures (_scoreBaordTemp select _x select 1 select 0) select 0 != _texturePath) exitWith {
+				_condtion = true;
+			};
+		} forEach _laneIndecies;
 	};
-} forEach _laneIndecies;
+} forEach (missionNamespace getVariable [format ["%1_DIGITS_ARRAY",_rangeID],[]]);
 
 _condtion

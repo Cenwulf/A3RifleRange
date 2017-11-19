@@ -21,13 +21,16 @@ params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams"
 
 _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
+private _laneCount = missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID];
+
 Sleep 0.5;
 
 {
-	if (_x < missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID]) then {
+	if (_x < _laneCount) then {
+
+		private _laneIndex = _x;
+
 		if !(missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x select 3) then {
-			missionNamespace getVariable format ["%1_SCORES_ARRAY", _rangeID] select _x set [0,-1];
-			[_rangeID,_x] call RR_fnc_refreshScores;
 
 			{
 				_x setDamage 0;
@@ -39,10 +42,20 @@ Sleep 0.5;
 			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [2,true]; // reset = true
 
 			publicVariable format ["%1_STATES_ARRAY",_rangeID];
+
+			for "_i" from 0 to 4 do {
+				missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] select _laneIndex select _i set [0,-1]; // set score to -1
+				[_rangeID,_laneIndex,_i,_laneIndex,_i] spawn RR_fnc_refreshScores; // refresh scoreboard to show the current scores
+			};
+
+			{
+				if (_forEachIndex >= _laneCount) then {
+					[_rangeID,_forEachIndex,_laneIndex,_laneIndex,4] call RR_fnc_refreshScores;
+				};
+			} forEach (missionNamespace getVariable format ["%1_DIGITS_ARRAY", _rangeID]); // refresh scores for all non lane specific scoreboards
+			// TODO: this is all messy as balls, need to clean it up within the refresh scores function. With multiple scoreboards the current way scores are refreshed needs to be revised.
 		};
 	} else {
 		diag_log format ["ERROR: fn_resetAction.sqf - Lane Index ""%1"" does not exist.",_x];
 	};
 } forEach _laneIndecies;
-
-// TODO: Convert to new standard

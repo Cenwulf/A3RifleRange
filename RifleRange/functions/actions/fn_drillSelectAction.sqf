@@ -20,7 +20,7 @@ scriptName "fn_drillSelectAction";
 
 params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams",[],[[]]]];
 
-_customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]],[_drillID,"",[""]]];
+_customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]],["_drillID","",[""]]];
 
 missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],_drillID,true];
 

@@ -9,36 +9,36 @@ scriptName "fn_numberToTexture";
 	_this select 0: Number - Number to be representied in world space as two textures.
 
 	Returns:
-	Array - Two strings refering to the paths of the texstures
+	Array - of no more than two strings refering to the paths of the textures for the first 2 digits of passed number.
 */
 #define SELF RR_fnc_numberToTexture
 
-private ["_number","_str","_array","_count"];
+params [["_number",0,[0]],["_texPrefix","",[""]],["_reverse",true,[true]]];
 
-_number = param [0,0,[0]];
+private ["_str","_array","_count"];
 
-_str = str (_number);
-
-_array = _str splitString "";
-
-if (_number == -1) then {
-	_array = ["dash","dash"];
+_array = switch _number do {
+	case -1: {["dash","dash"]};
+	case -2: {["blank","blank"]};
+	default {[_number] call RR_fnc_numberToArray};
 };
 
-if (_number == -2) then {
-	_array = ["blank","blank"];
+if _reverse then {
+	reverse _array;
 };
 
-_count = (count _array) - 1;
+_count = count _array;
 
-for "_n" from 0 to _count do {
-	_array set [_n, format ["rifleRange\textures\%1.paa",_array select _n]];
+if (_count > 2) then{
+	_array resize 2;
 };
 
-reverse _array;
-
-if (_count == 0) then {
-	_array pushBack "rifleRange\textures\blank.paa";
+if (_count == 1 && {_texPrefix == ""}) then {
+	_array pushback "blank";
 };
+
+{
+	_array set [_forEachIndex, format ["rifleRange\textures\%1%2.paa", _texPrefix, _array select _forEachIndex]];
+} forEach _array;
 
 _array

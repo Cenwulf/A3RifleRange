@@ -7,16 +7,17 @@ scriptName "fn_initRifleRange";
 
 	Parameter(s):
 	_this select 0: String - Unique Range ID used to identify the range and all its components, passed to all subsequent functions.
-	_this select 1: String - Range type, needs to match one of the standard range types listed below.
+	_this select 1: String - Range type, needs to match one of the standard range types listed below. More can be added later
 	_this select 2: Number - Number of lanes on range.
 
 	Returns:
 	String - RangeID in case of modification.
 
 	Notes:
-	Range types:	"ETR" - Electronic Training Range - Narrow, multi-lane range with few targets per range.
+	Range types:	"ETR" - Electronic Target Range - Narrow, multi-lane range with 3 targets per lane spaced 100m appart.
 					"IBSR" - Individual Battle Skills Range - Large range suitable for single firer or firer + spotter.
-					"QBSR" - Questionably Bull-Shit Range - An odd combination of the above that most people (myself included) first think of when they hear the phrase rifle range.
+					"QBSR" - Questionably Bull-Shit Range - An odd combination of the above that most people (myself included) first think of when they hear the words rifle range.
+					"SAPR" - Sidearm Proficiency Range	- Not a real acronym, intended for use with pistol range designed by Schilly of TF2031
 */
 #define SELF RR_fnc_initRifleRange
 
@@ -29,9 +30,9 @@ scriptName "fn_initRifleRange";
 */
 
 if !isServer exitWith {};
-params [["_rangeID","",[""]],["_rangeType","ETR",[""]],["_laneCount",5,[0]]];
+params [["_rangeID","ETR",[""]],["_rangeType","ETR",[""]],["_laneCount",5,[0]]];
 
-sleep random 0.5;
+sleep random 0.1;
 
 if (isNil "RR_RANGE_IDS") then {
 	RR_RANGE_IDS = [];
@@ -50,10 +51,12 @@ publicVariable "RR_RANGE_IDS";
 // Define available drills based on rangeType (Fomat: [["DISPLAY NAME","DRILL ID"]])
 // NOTE: Define name only, string will be used to select specific drill predefined in fn_startFiringDrill.sqf
 
-_drills = switch (_rangeType) do {
-	case "ETR": {[["ACMT (LDS)","ETR_default"],["ACMT (Ironsights)","ETR_ironsight"],["Phase 1","ETR_phase1"]]};
+_drills = switch (_rangeType) do { // Defines the default drills to be used for the range based on type. Drills are definied in fn_startFiringDrill.sqf. See range type definitions in header. To add your own type of range define a rangeType here and then at least one program in fn_startFiringDrill.sqf switch do.
+	// Array format: [<NAME>,<DRILL_ID>]; <NAME>: String - Will appear to the player when selecting drill through ACE actions; <DRILL_ID>: String - Passed to the fn_startFiringDrill function and used to select the correct program.
+	case "ETR": {[["Rapid Fire","ETR_rapidfire"],["Snap Shoot CQM Combo","ETR_snapcombo"],["ACMT (LDS)","ETR_default"],["ACMT (Ironsights)","ETR_ironsight"]]};
 	case "IBSR": {[["IBSR (Default)","IBSR_default"]]};
 	case "QBSR": {[["QBSR (Default)","QBSR_default"]]};
+	case "SAPR": {[["SAPT (Default)","ETRP_default"]]};
 };
 
 missionNamespace setVariable [format ["%1_DRILLS",_rangeID],_drills,true];
@@ -67,20 +70,56 @@ missionNamespace setVariable [format ["%1_LANE_COUNT",_rangeID],_laneCount,true]
 
 missionNamespace setVariable [format ["%1_SCORES_ARRAY",_rangeID],[]];
 missionNamespace setVariable [format ["%1_STATES_ARRAY",_rangeID],[]];
+missionNamespace setVariable [format ["%1_DIGITS_ARRAY",_rangeID], []];
+missionNamespace setVariable [format ["%1_UNUSED_DIGITS_ARRAY",_rangeID], []];
 missionNamespace setVariable [format ["%1_TARGETS_BY_LANE",_rangeID],[]];
 missionNamespace setVariable [format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID],[]];
 missionNamespace setVariable [format ["%1_ALL_TARGETS",_rangeID],[]];
 
-for "_i" from 1 to (missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID]) do {
-	missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] pushBack [0,0,0,0];
+missionNamespace setVariable [format ["%1_RANGE_FLAGS",_rangeID],[]];
+
+private _flags = missionNamespace getVariable format ["%1_RANGE_FLAGS",_rangeID];
+
+for "_i" from 0 to 999 do { // Check flag variable names and add them to array if they exist
+	private _flagVarName = format ["%1_rangeFlag_%2",_rangeID,_i];
+	if !(isNil _flagVarName) then {
+		_flags pushBack (missionNamespace getVariable _flagVarName);
+	};
+};
+
+for "_l" from 1 to _laneCount do {
+	_laneIndex = _l - 1;
+
+	missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] pushBack [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 	missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] pushBack [false,false,false,false];
 	missionNamespace getVariable format ["%1_DIGITS_ARRAY",_rangeID] pushBack [];
 	missionNamespace getVariable format ["%1_TARGETS_BY_LANE",_rangeID] pushBack [];
-	missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] pushBack [[],[],[]];
-	if !(isNil format ["%1_l%2_sign",_rangeID,_i]) then {
-		missionNamespace getVariable format ["%1_l%2_sign",_rangeID,_i] setObjectTextureGlobal [0,format ["rifleRange\textures\laneSign%1.paa",_i]];
+	missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] pushBack [[],[],[],[]];
+
+	if !(isNil format ["%1_l%2_sign",_rangeID,_l]) then {
+		missionNamespace getVariable format ["%1_l%2_sign",_rangeID,_l] setObjectTextureGlobal [0,format ["rifleRange\textures\laneSign%1.paa",_l]];
+	};
+
+	for "_g" from 1 to 4 do {
+		_distIndex = _g - 1;
+		for "_n" from 0 to 99 do {
+			if !(isNil format ["%1_l%2_g%3_%4", _rangeID, _l, _g, _n]) then {
+				_targ = missionNamespace getVariable format ["%1_l%2_g%3_%4", _rangeID, _l, _g, _n];
+				missionNamespace getVariable format ["%1_ALL_TARGETS",_rangeID] pushBack _targ;
+				missionNamespace getVariable format ["%1_TARGETS_BY_LANE",_rangeID] select _laneIndex pushBack _targ;
+				missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex pushBack _targ;
+				_targ addEventHandler ["hit", {_this call RR_fnc_targetHit;}];
+				_targ setVariable ["hitNumber",0];
+				_targ setVariable ["rangeID",_rangeID];
+				_targ setVariable ["laneIndex",_laneIndex];
+				_targ setVariable ["distIndex",_distIndex];
+				_targ setVariable ["scoreGroupIndex",-1];
+				_targ setObjectTextureGlobal [0,"rifleRange\textures\figure11.paa"];
+			};
+		};
 	};
 };
+
 
 // If whiteboard object exists set texture for current firing drill
 
@@ -88,54 +127,8 @@ if (!isNull (missionNamespace getVariable [format ["%1_WHITEBOARD_OBJECT", _rang
 	[_rangeID, missionNamespace getVariable format ["%1_CURRENT_DRILL",_rangeID]] call RR_fnc_setWhiteboardTexture;
 };
 
-// Find and list all targets associated with range based on target vehicleVarName
-
-{
-	_varName = vehicleVarName _x;
-	if (_varName != "") then {
-		_array = _varName splitString "_";
-
-		if (count _array != 4) then {
-			//diag_log format ["ERROR: ""%1"" - Target ""%2"" incorrect vehicleVarName format.",SELF,_x];
-		} else {
-			_rangeIDTarg = _array select 0;
-			_laneIDTarg = _array select 1;
-
-			_laneIDArray = _laneIDTarg splitString "";
-
-			if (_rangeID == _rangeIDTarg && {count _laneIDArray == 2 && {_laneIDArray select 0 == "l"}}) then {
-				_x addEventHandler ["hit", {_this call RR_fnc_targetHit;}];
-				_x setVariable ["hitNumber",0];
-				_x setObjectTextureGlobal [0,"rifleRange\textures\figure11.paa"];
-
-				missionNamespace getVariable format ["%1_ALL_TARGETS",_rangeID] pushBack _x;
-
-				_laneNumber = parseNumber (_laneIDArray select 1);
-				_index = _laneNumber - 1;
-				missionNamespace getVariable format ["%1_TARGETS_BY_LANE",_rangeID] select _index pushBack _x;
-				_distTarg = switch (_array select 2) do {
-					case "c": {0};
-					case "m": {1};
-					case "f": {2};
-				};
-				missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _index select _distTarg pushBack _x;
-			};
-		};
-	};
-} forEach (allMissionObjects "TargetBase");
-
-// TODO: sorting for multi target lanes
-/*
-{
-	{
-		_sortedTargets = [_x,[],{(reverse ((vehicleVarName _x) splitString "_")) select 0},"ASCEND"] call BIS_fnc_sortBy;
-		_x set [_forEachIndex,_sortedTargets];
-	} forEach _x;
-} forEach (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID]);
-*/
 // publivVariable variables required by client
 publicVariable format ["%1_STATES_ARRAY",_rangeID];
-
 
 // finalise init
 missionNamespace setVariable [format ["%1_POWER_ON",_rangeID],false,true];
