@@ -163,7 +163,9 @@ switch (_drill) do {
 	};
 
 	case "ETR_snapcombo": {
-		_distIndex = {floor random 4};
+
+
+		_distIndex = 0;
 		_exposure = 3; // time a target is raised for
 		_interval = {0.5 + linearConversion [0,115,floor random 116,0,11.5]}; // randome interval between 0.5 and 12 seconds
 		_intervalSwitch = 10; // time before next target when the player would need to switch stance
@@ -171,38 +173,48 @@ switch (_drill) do {
 		_hitsPerTarg = 1000; // Number of hits befroe target falls and stops scoring
 
 		_program = [
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,_intervalSwitch,true,1], 	// prone 10 shots at random targets
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,_intervalSwitch,true,2], 	// kneeling 10 shots at random targets
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
-			[call _distIndex,_targIndex,_hitsPerTarg,_exposure,_intervalSwitch,true,3], 	// standing 10 shots at random targets
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,1],
+			[0,_targIndex,_hitsPerTarg,_exposure,_intervalSwitch,true,1], 	// prone 10 shots at random targets
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,2],
+			[0,_targIndex,_hitsPerTarg,_exposure,_intervalSwitch,true,2], 	// kneeling 10 shots at random targets
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,call _interval,false,3],
+			[0,_targIndex,_hitsPerTarg,_exposure,_intervalSwitch,true,3], 	// standing 10 shots at random targets
 			[0,_targIndex,_hitsPerTarg,10,0,false,4] 										// CQM exposure
 		];
+
+		_distIndexArray = [0,0,1,1,1,2,2,2,3,3];
+
+		for "_i" from 0 to 2 do {
+			_array = _distIndexArray call BIS_fnc_arrayShuffle;
+			{
+				_element = _forEachIndex + (_i * 10);
+				_program select _element set [0,_x];
+			} forEach _array;
+		};
 	};
 };
 

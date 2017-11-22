@@ -21,4 +21,4 @@ params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams"
 
 _customParams params [["_rangeID","",[""]]];
 
-(player getVariable ["RR_connectedRange",""] != _rangeID && {("G_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player + [goggles player]) || "H_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]))})
+(player getVariable ["RR_connectedRange",""] != _rangeID && {("G_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player + [goggles player]) || "H_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]) || "H_Cap_oli_hs" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]) || "H_Cap_headphones" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]))})

@@ -113,9 +113,9 @@ _actionSpeakerSettings = [format ["%1SpeakerSettings",_rangeID],"Speaker Setting
 
 _actionSpeakerSettingsMuted = [format ["%1SpeakerSettingsMuted",_rangeID],"Speaker Setting","rifleRange\textures\icons\mute.paa",{},{_this call RR_fnc_speakerSettingsMutedCondition},{},[_rangeID]] call ace_interact_menu_fnc_createAction;
 
-_actionTestLong = [format ["%1TestLong",_rangeID],"Test Loudspeaker (Long)","rifleRange\textures\icons\speaker.paa",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{_this call RR_fnc_testSpeakerCondition},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_LONG.wav"]] call ace_interact_menu_fnc_createAction;
+_actionTestLong = [format ["%1TestLong",_rangeID],"Test Loudspeaker (Long)","rifleRange\textures\icons\speaker.paa",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{_this call RR_fnc_testSpeakerCondition},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_LONG.ogg"]] call ace_interact_menu_fnc_createAction;
 
-_actionTestShort = [format ["%1TestShort",_rangeID],"Test Loudspeaker (Short)","rifleRange\textures\icons\speaker.paa",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{_this call RR_fnc_testSpeakerCondition},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_SHORT.wav"]] call ace_interact_menu_fnc_createAction;
+_actionTestShort = [format ["%1TestShort",_rangeID],"Test Loudspeaker (Short)","rifleRange\textures\icons\speaker.paa",{_this remoteExec ["RR_fnc_testSpeakerAction",2]},{_this call RR_fnc_testSpeakerCondition},{},[_rangeID,"rifleRange\sounds\BUZZER_ARENA_SHORT.ogg"]] call ace_interact_menu_fnc_createAction;
 
 _actionConnect= [format ["%1Connect",_rangeID],"Connect Receiver","rifleRange\textures\icons\connect.paa",{_this call RR_fnc_connectHeadsetAction},{_this call RR_fnc_connectHeadsetCondition},{},[_rangeID]] call ace_interact_menu_fnc_createAction;
 

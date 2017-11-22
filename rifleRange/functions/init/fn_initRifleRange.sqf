@@ -53,7 +53,7 @@ publicVariable "RR_RANGE_IDS";
 
 _drills = switch (_rangeType) do { // Defines the default drills to be used for the range based on type. Drills are definied in fn_startFiringDrill.sqf. See range type definitions in header. To add your own type of range define a rangeType here and then at least one program in fn_startFiringDrill.sqf switch do.
 	// Array format: [<NAME>,<DRILL_ID>]; <NAME>: String - Will appear to the player when selecting drill through ACE actions; <DRILL_ID>: String - Passed to the fn_startFiringDrill function and used to select the correct program.
-	case "ETR": {[["Rapid Fire","ETR_rapidfire"],["Snap Shoot CQM Combo","ETR_snapcombo"],["ACMT (LDS)","ETR_default"],["ACMT (Ironsights)","ETR_ironsight"]]};
+	case "ETR": {[["ACMT (Rapid)","ETR_rapidfire"],["ACMT (Snap)","ETR_snapcombo"]]};
 	case "IBSR": {[["IBSR (Default)","IBSR_default"]]};
 	case "QBSR": {[["QBSR (Default)","QBSR_default"]]};
 	case "SAPR": {[["SAPT (Default)","ETRP_default"]]};

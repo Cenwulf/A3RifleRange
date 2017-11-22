@@ -17,4 +17,4 @@ scriptName "fn_disconnectHeadsetCondition";
 */
 #define SELF RR_fnc_disconnectHeadsetCondition
 
-(player getVariable ["RR_connectedRange", ""] != "" && {("G_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player + [goggles player]) || "H_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]))})
+(player getVariable ["RR_connectedRange",""] != "" && {("G_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player + [goggles player]) || "H_WirelessEarpiece_F" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]) || "H_Cap_oli_hs" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]) || "H_Cap_headphones" in (vestItems player + uniformItems player + backpackItems player +  [headgear player]))})

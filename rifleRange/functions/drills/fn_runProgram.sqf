@@ -40,7 +40,7 @@ waitUntil {time >= _time || !(missionNamespace getVariable format ["%1_STATES_AR
 
 if (_primary) then {
 	if !(isNil format ["%1_loudspeaker", _rangeID] || missionNamespace getVariable [format ["%1_SPEAKER_MUTED",_rangeID],false]) then {
-		["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
+		["rifleRange\sounds\BUZZER_ARENA_SHORT.ogg",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
 	};
 
 	{
@@ -92,7 +92,7 @@ if (_primary) then {
 
 	if (_primary && _buzzer) then {
 		if !(isNil format ["%1_loudspeaker", _rangeID] || missionNamespace getVariable [format ["%1_SPEAKER_MUTED",_rangeID],false]) then {
-			["rifleRange\sounds\BUZZER_ARENA_SHORT.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
+			["rifleRange\sounds\BUZZER_ARENA_SHORT.ogg",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
 		};
 
 		[_rangeID,"RR_MidBeep"] remoteExec ["RR_fnc_playHeadsetSound"];
@@ -117,7 +117,7 @@ if (_primary) then {
 	[_rangeID,"RR_EndBeep"] remoteExec ["RR_fnc_playHeadsetSound"];
 
 	if !(isNil format ["%1_loudspeaker", _rangeID] || missionNamespace getVariable [format ["%1_SPEAKER_MUTED",_rangeID],false]) then {
-		["rifleRange\sounds\BUZZER_ARENA_LONG.wav",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
+		["rifleRange\sounds\BUZZER_ARENA_LONG.ogg",missionNamespace getVariable format ["%1_loudspeaker",_rangeID],false,missionNamespace getVariable format ["%1_loudspeaker",_rangeID] modelToWorld [0,0.00390625,3.96981],3] call RR_fnc_PlayMissionSound3D;
 	};
 
 	{
