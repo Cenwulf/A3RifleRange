@@ -13,6 +13,8 @@ class RifleRangeFunctions {
 		class drillSelectAction {};
 		class muteSpeakerAction {};
 		class muteSpeakerCondition {};
+		class pauseAction {};
+		class pauseCondition {};
 		class powerCondition {};
 		class powerOffAction {};
 		class powerOnAction {};

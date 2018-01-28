@@ -33,10 +33,7 @@ sleep 0.5;
 		if !(missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x select 0) then {
 
 			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [0,true]; // started = true
-			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [1,false]; // stopped = false
 			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [2,false]; // reset = false
-
-			publicVariable format ["%1_STATES_ARRAY",_rangeID];
 
 			for "_i" from 0 to 4 do {
 				missionNamespace getVariable format ["%1_SCORES_ARRAY",_rangeID] select _laneIndex select _i set [0,0]; // set score to 0
@@ -50,6 +47,7 @@ sleep 0.5;
 			} forEach (missionNamespace getVariable format ["%1_DIGITS_ARRAY", _rangeID]); // refresh scores for all non lane specific scoreboards
 			// TODO: this is all messy as balls, need to clean it up within the refresh scores function. With multiple scoreboards the current way scores are refreshed needs to be revised.
 		};
+		publicVariable format ["%1_STATES_ARRAY",_rangeID];
 	} else {
 		diag_log format ["ERROR: fn_startAction.sqf - Lane Index ""%1"" does not exist.",_x];
 	};

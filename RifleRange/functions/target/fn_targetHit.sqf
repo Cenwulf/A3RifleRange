@@ -23,17 +23,25 @@ params [["_targ",objNull,[objNull]],["_shooter",objNull,[objNull]],["_damage",0,
 
 _targ setDamage 0;
 
+_targ = _targ getVariable ["masterTarg", _targ];
+
 if (_targ getVariable ["isActive",false]) then {
 
 	_targ setVariable ["hitNumber",(_targ getVariable ["hitNumber",0]) + 1];
 
-	if (_targ getVariable ["isScoring",false]) then {
+	private _hitNumber = _targ getVariable "hitNumber";
 
-		private _targVarName = vehicleVarName _targ;
+	private _maxHits = _targ getVariable ["maxHits",-1];
+
+	private _hitsRequired = _targ getVariable ["hitsRequired",1];
+
+	private _enoughHits = _hitNumber / _hitsRequired == round (_hitNumber / _hitsRequired);
+
+	if (_enoughHits && {(_maxHits < 0 || _hitNumber <= _maxHits)}) then {
 
 		private _rangeID = _targ getVariable ["rangeID",""];
 
-		private _scoreGroup =  _targ getVariable ["scoreGroup",-1];
+		private _scoreGroup = _targ getVariable ["scoreGroup",-1];
 
 		Private _scoreGroupIndex = _scoreGroup - 1;
 
@@ -41,8 +49,10 @@ if (_targ getVariable ["isActive",false]) then {
 
 		private _laneIndex = _targ getVariable ["laneIndex",0];
 
+		private _score = _targ getVariable ["targScore",1];
+
 		if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) then {
-			[_rangeID,_laneIndex,_distIndex,1] call RR_fnc_addScore;
+			[_rangeID,_laneIndex,_distIndex,_score] call RR_fnc_addScore;
 		};
 	};
 };

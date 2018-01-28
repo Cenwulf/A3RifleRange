@@ -1,9 +1,9 @@
-scriptName "fn_stopAction";
+scriptName "fn_pauseAction";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
 	Description:
-	Stops the firing drill currently running on each lane passed in _laneIndecies array.
+	Pauses the firing drill currently running on each lane passed in _laneIndecies array.
 
 	Parameter(s):
 	_this select 0: Object - Object the action was attached to.
@@ -15,7 +15,7 @@ scriptName "fn_stopAction";
 	Returns:
 	Nothing
 */
-#define SELF RR_fnc_stopAction
+#define SELF RR_fnc_pauseAction
 
 params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams",[],[[]]]];
 
@@ -23,9 +23,9 @@ _customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]]];
 
 {
 	if (_x < missionNamespace getVariable format ["%1_LANE_COUNT", _rangeID]) then {
-		if !(missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x select 1) then {
-			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [0,false]; // started = false
-			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [1,true]; // stopped = true
+		if !(missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x select 3) then {
+			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [3,true]; // paused = true
+		} else {
 			missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _x set [3,false]; // paused = false
 		};
 		publicVariable format ["%1_STATES_ARRAY",_rangeID];

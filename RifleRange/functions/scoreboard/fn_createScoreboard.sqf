@@ -40,14 +40,10 @@ private _laneCount = missionNamespace getVariable format ["%1_LANE_COUNT", _rang
 
 private _scoreboardObjArray = [_scoreboardObj];
 
-// _scoreboardObj setVehiclePosition [getPos _scoreboardObj, [], 0, "CAN_COLLIDE"];
-
-// _scoreboardObj setVectorUp [0,0,1];
+_scoreboardLaneID = if (_scoreboardLaneID > _laneCount) then {-1} else {_scoreboardLaneID};
 
 if (_scoreboardLaneID < 1 && {_laneCount / 5 > 1}) then {
 	for "_i" from 1 to ((ceil (_laneCount / 5)) - 1) do {
-		// _pos = getPos (_scoreboardObjArray select 0);
-		// _pos set [2, (_pos select 2) + _i];
 		_obj = createVehicle ["SignAd_Sponsor_F", [0,0,0], [], 0, "CAN_COLLIDE"];
 		_obj setDir _scoreboardDir;
 		_obj attachTo [_scoreboardObj, [0,0,_i]];

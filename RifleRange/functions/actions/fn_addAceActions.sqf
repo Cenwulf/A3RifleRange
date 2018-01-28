@@ -44,21 +44,29 @@ for "_n" from 1 to (missionNameSpace getVariable format ["%1_LANE_COUNT",_rangeI
 
 	_laneIndecies pushBack _index;
 
-	if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID],"ETR"] == "QBSR") then {
+	if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID],"ETR"] == "QBSR") then { // QBSR range type is the only range type that allows you to control lanes individually
 
 		_actionLane = [format ["%1%2",_rangeID,_n],format ["Lane %1",_n],"",{},{_this call RR_fnc_powerCondition},{},[_rangeID]] call ace_interact_menu_fnc_createAction;
 
-		_actionStart = [format ["%1%2Start",_rangeID,_n],"Start","rifleRange\textures\icons\start.paa",{_this remoteExec ["RR_fnc_StartAction",2];},{_this call RR_fnc_startCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
+		_actionStart = [format ["%1%2Start",_rangeID,_n],"Start","rifleRange\textures\icons\start.paa",{_this remoteExec ["RR_fnc_startAction",2];},{_this call RR_fnc_startCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
 
-		_actionStop = [format ["%1%2Stop",_rangeID,_n],"Stop","rifleRange\textures\icons\stop.paa",{_this remoteExec ["RR_fnc_StopAction",2]},{_this call RR_fnc_stopCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
+		_actionPause = [format ["%1%2Pause",_rangeID,_n],"Pause","rifleRange\textures\icons\pause.paa",{_this remoteExec ["RR_fnc_pauseAction",2]},{(_this call RR_fnc_stopCondition && {_this call RR_fnc_pauseCondition})},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
-		_actionReset = [format ["%1%2Reset",_rangeID,_n],"Reset","rifleRange\textures\icons\reset.paa",{_this remoteExec ["RR_fnc_ResetAction",2]},{_this call RR_fnc_resetCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
+		_actionContinue = [format ["%1%2Continue",_rangeID,_n],"Continue","rifleRange\textures\icons\start.paa",{_this remoteExec ["RR_fnc_pauseAction",2]},{(_this call RR_fnc_stopCondition && {!(_this call RR_fnc_pauseCondition)})},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+
+		_actionStop = [format ["%1%2Stop",_rangeID,_n],"Stop","rifleRange\textures\icons\stop.paa",{_this remoteExec ["RR_fnc_stopAction",2]},{_this call RR_fnc_stopCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
+
+		_actionReset = [format ["%1%2Reset",_rangeID,_n],"Reset","rifleRange\textures\icons\reset.paa",{_this remoteExec ["RR_fnc_resetAction",2]},{_this call RR_fnc_resetCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
 
 		_actionClearHighScore = [format ["%1%2Clear",_rangeID,_n],"Clear High-score","rifleRange\textures\icons\clear.paa",{_this remoteExec ["RR_fnc_clearHighScoreAction",2]},{_this call RR_fnc_clearCondition},{},[_rangeID,[_index]]] call ace_interact_menu_fnc_createAction;
 
 		[_obj,0,["ACE_MainActions"],_actionLane] call ace_interact_menu_fnc_addActionToObject;
 
 		[_obj,0,["ACE_MainActions",format ["%1%2",_rangeID,_n]],_actionStart] call ace_interact_menu_fnc_addActionToObject;
+
+		[_obj,0,["ACE_MainActions",format ["%1%2",_rangeID,_n]],_actionPause] call ace_interact_menu_fnc_addActionToObject;
+
+		[_obj,0,["ACE_MainActions",format ["%1%2",_rangeID,_n]],_actionContinue] call ace_interact_menu_fnc_addActionToObject;
 
 		[_obj,0,["ACE_MainActions",format ["%1%2",_rangeID,_n]],_actionStop] call ace_interact_menu_fnc_addActionToObject;
 
@@ -73,7 +81,11 @@ _actionName = if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID
 
 _actionLane = [format ["%1All",_rangeID],_actionName,"\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa",{},{_this call RR_fnc_powerCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
-_actionStart = [format ["%1AllStart",_rangeID],"Start","rifleRange\textures\icons\start.paa",{_this remoteExec ["RR_fnc_StartAction",2]},{_this call RR_fnc_startCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+_actionStart = [format ["%1AllStart",_rangeID],"Start","rifleRange\textures\icons\start.paa",{_this remoteExec ["RR_fnc_startAction",2]},{_this call RR_fnc_startCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+
+_actionPause = [format ["%1AllPause",_rangeID],"Pause","rifleRange\textures\icons\pause.paa",{_this remoteExec ["RR_fnc_pauseAction",2]},{(_this call RR_fnc_stopCondition && {_this call RR_fnc_pauseCondition})},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
+
+_actionContinue = [format ["%1AllContinue",_rangeID],"Continue","rifleRange\textures\icons\start.paa",{_this remoteExec ["RR_fnc_pauseAction",2]},{(_this call RR_fnc_stopCondition && {!(_this call RR_fnc_pauseCondition)})},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
 _actionStop = [format ["%1AllStop",_rangeID],"Stop","rifleRange\textures\icons\stop.paa",{_this remoteExec ["RR_fnc_StopAction",2]},{_this call RR_fnc_stopCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
@@ -84,6 +96,10 @@ _actionClearHighScore = [format ["%1AllClear",_rangeID],"Clear High-scores","rif
 [_obj,0,["ACE_MainActions"],_actionLane] call ace_interact_menu_fnc_addActionToObject;
 
 [_obj,0,["ACE_MainActions",format ["%1All",_rangeID]],_actionStart] call ace_interact_menu_fnc_addActionToObject;
+
+[_obj,0,["ACE_MainActions",format ["%1All",_rangeID]],_actionPause] call ace_interact_menu_fnc_addActionToObject;
+
+[_obj,0,["ACE_MainActions",format ["%1All",_rangeID]],_actionContinue] call ace_interact_menu_fnc_addActionToObject;
 
 [_obj,0,["ACE_MainActions",format ["%1All",_rangeID]],_actionStop] call ace_interact_menu_fnc_addActionToObject;
 

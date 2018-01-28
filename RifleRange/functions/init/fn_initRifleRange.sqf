@@ -7,7 +7,7 @@ scriptName "fn_initRifleRange";
 
 	Parameter(s):
 	_this select 0: String - Unique Range ID used to identify the range and all its components, passed to all subsequent functions.
-	_this select 1: String - Range type, needs to match one of the standard range types listed below. More can be added later
+	_this select 1: String - Range type, needs to match one of the range types listed below. More can be added later on line 54 of this function
 	_this select 2: Number - Number of lanes on range.
 
 	Returns:
@@ -53,7 +53,7 @@ publicVariable "RR_RANGE_IDS";
 
 _drills = switch (_rangeType) do { // Defines the default drills to be used for the range based on type. Drills are definied in fn_startFiringDrill.sqf. See range type definitions in header. To add your own type of range define a rangeType here and then at least one program in fn_startFiringDrill.sqf switch do.
 	// Array format: [<NAME>,<DRILL_ID>]; <NAME>: String - Will appear to the player when selecting drill through ACE actions; <DRILL_ID>: String - Passed to the fn_startFiringDrill function and used to select the correct program.
-	case "ETR": {[["ACMT (Rapid)","ETR_rapidfire"],["ACMT (Snap)","ETR_snapcombo"]]};
+	case "ETR": {[["ACMT (Rapid)","ETR_rapidfire"],["ACMT (Snap)","ETR_snapcombo"],["ACTM (LMG)","ETR_lmg"]]};
 	case "IBSR": {[["IBSR (Default)","IBSR_default"]]};
 	case "QBSR": {[["QBSR (Default)","QBSR_default"]]};
 	case "SAPR": {[["SAPT (Default)","ETRP_default"]]};
@@ -113,7 +113,9 @@ for "_l" from 1 to _laneCount do {
 				_targ setVariable ["rangeID",_rangeID];
 				_targ setVariable ["laneIndex",_laneIndex];
 				_targ setVariable ["distIndex",_distIndex];
-				_targ setVariable ["scoreGroupIndex",-1];
+				_targ setVariable ["scoreGroup",-1];
+				_targ setVariable ["isActive",false];
+				_targ setVariable ["isScoring",false];
 				_targ setObjectTextureGlobal [0,"rifleRange\textures\figure11.paa"];
 			};
 		};

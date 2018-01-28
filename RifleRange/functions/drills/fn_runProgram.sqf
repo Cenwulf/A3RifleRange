@@ -27,11 +27,17 @@ private _startDelay = missionNamespace getVariable [format ["%1_START_DELAY",_ra
 
 _time = _time + _startDelay;
 
-waitUntil {time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)}; // cannot use sleep command as we need to be able to break out of it if the drill is stopped
+waitUntil {
+	if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) then { // delay start if paused
+		_time = _time + 0.1;
+		sleep 0.1;
+	};
+	(time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0))
+}; // cannot use sleep command as we need to be able to break out of it if the drill is stopped
 
 // This entire function (fn_runProgram) is run once FOR EACH lane of the firing range, one lane is designated as the primary lane, use "if (_primary) then {WHATEVER};" to execute code that should only be run once per drill, in this case the buzzer sound.
 if (_primary) then {
-		[_rangeID,"RR_StartBeep"] remoteExec ["RR_fnc_playHeadsetSound"];
+	[_rangeID,"RR_StartBeep"] remoteExec ["RR_fnc_playHeadsetSound"];
 };
 
 _time = _time + 3; // always a 3 second sleep to synchronise buzzer sound with headset beep sound
@@ -54,39 +60,86 @@ if (_primary) then {
 	} forEach _flags;
 };
 
+// forEach _program
 {
-	_x params [["_distIndex",0,[0]],["_targIndex",0,[0]],["_hits",0,[0]],["_upTime",0,[0]],["_interval",0,[0]],["_buzzer",false,[true]],["_scoreGroup",-1,[0]]];
+	_x params [["_distIndex",0,[0]],["_targIndex",0,[0,[]]],["_maxHits",-1,[0]],["_hitsRequired",1,[0]],["_targScore",1,[0]],["_upTime",0,[0]],["_interval",0,[0]],["_buzzer",false,[true]],["_scoreGroup",-1,[0]],["_fall",true,[true]]];
 
-	if (count (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex) == 0) exitWith {remoteExec ["systemChat", format ["Error: RR_fnc_runProgram & RR_fnc_startFiringDrill - RangeID %1 Lane %2 missing target from group %3",_rangeID,_laneIndex + 1,_distIndex + 1]]};
+	private _targGroup = missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex;
+
+	if (count _targGroup == 0) exitWith {remoteExec ["systemChat", format ["Error: RR_fnc_runProgram & RR_fnc_startFiringDrill - RangeID %1 Lane %2 missing targets from group %3",_rangeID,_laneIndex + 1,_distIndex + 1]]};
 
 	_time = _time + _upTime;
 
-	private _targ = if (_targIndex == -1) then {missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex select floor random count (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex)} else {missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select _laneIndex select _distIndex select _targIndex};
+	private _targ = objNull;
+
+	private _slaveTargArray = [];
+
+	if (typeName _targIndex == typeName []) then {// if an array of target indecies is passed it is assumed that the targets are side by side and intended to act as one target
+		_targ = _targGroup select (_targIndex select 0); // first target assigned as "master"
+		{
+			if (_forEachIndex != 0) then { // Every target but the first is assigned as a "slave" target
+				_slaveTarg = _targGroup select _x;
+				_slaveTarg setVariable ["masterTarg", _targ];
+				_slaveTargArray pushBack _slaveTarg;
+			};
+		} forEach _targIndex;
+	} else {
+		_targ = if (_targIndex == -1) then {_targGroup select floor random count (_targGroup)} else {_targGroup select _targIndex}; // if _targIndex equals -1 a random target from that distance group will be selected
+	};
+
+	_targ setVariable ["masterTarg", _targ]; // set master targ as self in case it hasn't been reset from a previous
 
 	_targ setVariable ["hitNumber",0]; // reset hit counter on target
 
+	_targ setVariable ["maxHits",_maxHits]; // set max hits
+
+	_targ setVariable ["hitsRequired",_hitsRequired]; // set hits required
+
 	_targ setVariable ["scoreGroup",_scoreGroup]; // set score group
+
+	_targ setVariable ["targScore",_targScore]; // set target score
 
 	_targ animate ["Terc",0]; // raise target
 
+	{
+		_x animate ["Terc",0]; // raise slave targets
+	} forEach _slaveTargArray;
+
 	_targ setVariable ["isActive",true]; // now registers hits
-	_targ setVariable ["isScoring",true]; // hits add to score
 
-	waitUntil {_targ getVariable "hitNumber" >= _hits || time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)};
-
-	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {
-		// exits if the range state changes (isn't "RUNNING")
-		_targ setVariable ["hitNumber",0]; // reset hit counter on target
+	waitUntil { // Wait until the number of hits have been reached or the exposure time is exceeded or run is stopped
+		if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) then { // if paused set target as inactive (wont register hits) record time delay and wait for continue or stop command
+			_targ setVariable ["isActive",false]; // stop registers hits
+			_timeDiff = _time - time; // record time differce
+			waitUntil {!(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)}; // wait for continue or stop
+			_time = time + _timeDiff; // restore time difference
+			_targ setVariable ["isActive",true]; // now registers hits
+		};
+		((_fall && {_targ getVariable "hitNumber" >= _maxHits && {_maxHits >= 0}}) || time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0))
 	};
 
 	_targ setVariable ["isActive",false]; // stop registering hits
-	_targ setVariable ["isScoring",false]; // hits do not add to score
+
+	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {  // if the run is stopped exit the program and reset target hitnumber
+		_targ setVariable ["hitNumber",0]; // reset hit counter on target
+	};
 
 	_targ animate ["Terc",1]; // lower target
 
-	waitUntil {time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)};
+	{
+		_x animate ["Terc",1]; // lower slave targets
+	} forEach _slaveTargArray;
 
-	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {
+	waitUntil { // wait until exposure time is exceeded or run is stopped (if the previous wait is exited due to number of hits then still need to wait for the exposure time to elapse to remain synchronised)
+		if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) then {
+			_timeDiff = _time - time; // record time differce
+			waitUntil {!(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)}; // wait for continue or stop
+			_time = time + _timeDiff; // restore time difference
+		};
+		(time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0))
+	};
+
+	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith { // if the run is stopped exit the program and reset target hitnumber
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
 	};
 
@@ -100,9 +153,16 @@ if (_primary) then {
 
 	_time = _time + _interval;
 
-	waitUntil {time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)};
+	waitUntil {
+		if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) then {
+			_timeDiff = _time - time; // record time differce
+			waitUntil {!(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0)}; // wait for continue or stop
+			_time = time + _timeDiff; // restore time difference
+		};
+		(time >= _time || !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0))
+	};
 
-	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {
+	if !(missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 0) exitWith {  // if the run is stopped exit the program and reset target hitnumber
 		_targ setVariable ["hitNumber",0]; // reset hit counter on target
 	};
 } forEach _program;
@@ -110,6 +170,7 @@ if (_primary) then {
 missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex set [0,false]; // started = false
 missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex set [1,true]; // stopped = true
 missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex set [2,false]; // reset = false
+missionNamespace getVariable format ["%1_STATES_ARRAY",_rangeID] select _laneIndex set [3,false]; // paused = false
 
 publicVariable format ["%1_STATES_ARRAY",_rangeID];
 
