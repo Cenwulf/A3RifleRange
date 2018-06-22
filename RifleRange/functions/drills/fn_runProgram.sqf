@@ -75,9 +75,15 @@ if (_primary) then {
 	private _slaveTargArray = [];
 
 	if (typeName _targIndex == typeName []) then {// if an array of target indecies is passed it is assumed that the targets are side by side and intended to act as one target
-		_targ = _targGroup select (_targIndex select 0); // first target assigned as "master"
+
 		{
-			if (_forEachIndex != 0) then { // Every target but the first is assigned as a "slave" target
+			if (_x >= count _targGroup) exitWith { // if any index in _targIndex array is greater than the available number of targets in _targGroup array exit and select the first available target and system chat an error message.
+				_targ = _targGroup select 0;
+				remoteExec ["systemChat", format ["Error: RR_fnc_runProgram & RR_fnc_startFiringDrill - Drill program %1 is trying to select a target that doesn't exist",missionNamespace getVariable format ["%1_CURRENT_DRILL",_rangeID]]];
+			};
+			if (_forEachIndex == 0) then {  // first target assigned as "master"
+				_targ = _targGroup select (_targIndex select 0);
+			} else {// every target but the first is assigned as a "slave" target
 				_slaveTarg = _targGroup select _x;
 				_slaveTarg setVariable ["masterTarg", _targ];
 				_slaveTargArray pushBack _slaveTarg;

@@ -49,11 +49,12 @@ RR_RANGE_IDS pushBack _rangeID;
 publicVariable "RR_RANGE_IDS";
 
 // Define available drills based on rangeType (Fomat: [["DISPLAY NAME","DRILL ID"]])
-// NOTE: Define name only, string will be used to select specific drill predefined in fn_startFiringDrill.sqf
+// NOTE: Name can be whatever you want, drill ID string will be used to select specific drill and must be predefined in fn_startFiringDrill.sqf
 
 _drills = switch (_rangeType) do { // Defines the default drills to be used for the range based on type. Drills are definied in fn_startFiringDrill.sqf. See range type definitions in header. To add your own type of range define a rangeType here and then at least one program in fn_startFiringDrill.sqf switch do.
 	// Array format: [<NAME>,<DRILL_ID>]; <NAME>: String - Will appear to the player when selecting drill through ACE actions; <DRILL_ID>: String - Passed to the fn_startFiringDrill function and used to select the correct program.
-	case "ETR": {[["ACMT (Rapid)","ETR_rapidfire"],["ACMT (Snap)","ETR_snapcombo"],["ACTM (LMG)","ETR_lmg"]]};
+	case "ETR": {[["ACMT (Rapid)","ETR_rapidfire"],["ACMT (Snap)","ETR_snapcombo"]]};
+	case "LMG": {[["ACMT (Rapid)","ETR_rapidfire"],["ACMT (Snap)","ETR_snapcombo"],["LMG Part 1","ETR_p1lmg"],["LMG Part 2","ETR_p2lmg"]]};
 	case "IBSR": {[["IBSR (Default)","IBSR_default"]]};
 	case "QBSR": {[["QBSR (Default)","QBSR_default"]]};
 	case "SAPR": {[["SAPT (Default)","ETRP_default"]]};

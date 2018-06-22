@@ -18,11 +18,11 @@ scriptName "fn_startFiringDrill";
 	Notes:
 	EXAMPLE PROGRAM:
 	_program = [
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)] // Target 1
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)] // Target 2
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)] // Target 3
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL)_scoreGroup (OPTIONAL),_fall (OPTIONAL)] // Target n...
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)]  // Final target
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target 1
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target 2
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target 3
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target n...
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)]		// Final target
 	];
 
 	_distIndex - targets are grouped, 0 = 100m targets, 1 = 200m targets, 2 = 300m targets, 3 = 400m targets
@@ -156,7 +156,7 @@ switch (_drill) do {
 		_targIndex = 0;					// element to select from target array grouped by lane and distance
 		_exposure = 10;					// time a target is raised for
 		_interval = 5;					// time before next target
-		_intervalSwitch = 10;			// time before next target when the player would need to switch stance
+		_intervalSwitch = 12;			// time before next target when the player would need to switch stance or reload
 
 		_hitsPerTarg = -1;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
@@ -186,7 +186,7 @@ switch (_drill) do {
 		_intervalMin = 0.5;				// min time interval
 		_intervalMax = 12;				// max interval
 		_interval = {_intervalMin + random (_intervalMax - _intervalMin)}; // random interval between min and max
-		_intervalSwitch = 10; 			// time before next target when the player would need to switch stance
+		_intervalSwitch = 12; 			// time before next target when the player would need to switch stance or reload
 
 		_hitsPerTarg = -1; 				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit until _exposure time expires)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
@@ -265,6 +265,72 @@ switch (_drill) do {
 			[1,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,2,false,nil,_fall]
+		];
+	};
+
+	case "ETR_p1lmg": {
+		_targIndex = [0,1,2];			// elements to select from target array grouped by lane and distance
+		_exposure = 8;					// time a target is raised for
+		_interval = 3;					// time before next target
+		_intervalSwitch = 20;			// time before next target when the player would need to switch stance
+
+		_hitsPerTarg = 5;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsRequired = 1; 				// Number of hits required to trigger a score
+		_targScore = 1;					// Number of points hit is worth
+
+		_fall = false;
+
+		_program = [
+			[0,0,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,nil,_fall],
+			[0,0,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,nil,_fall],
+			[0,0,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,2,false,nil,_fall]
+		];
+	};
+
+	case "ETR_p2lmg": {
+		_targIndex = [0,1,2];			// elements to select from target array grouped by lane and distance
+		_exposure = 10;					// time a target is raised for
+		_intervalMin = 3;				// min time interval
+		_intervalMax = 6;				// max interval
+		_interval = {_intervalMin + random (_intervalMax - _intervalMin)}; // random interval between min and max
+		_intervalSwitch = 10;			// time before next target when the player would need to switch stance
+
+		_hitsPerTarg = 3;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsRequired = 1; 				// Number of hits required to trigger a score
+		_targScore = 1;					// Number of points hit is worth
+
+		_fall = false;
+
+		_program = [
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[0,0,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[1,[0,1],_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall]
 		];
 	};
 };
