@@ -18,16 +18,16 @@ scriptName "fn_startFiringDrill";
 	Notes:
 	EXAMPLE PROGRAM:
 	_program = [
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target 1
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target 2
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target 3
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target n...
-		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)]		// Final target
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target exposure 1
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target exposure 2
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target exposure 3
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)],	// Target exposure n...
+		[_distIndex,_hitsPerTarg,_hitsRequired,_targScore,_targIndex,_exposure,_interval,_buzzer(OPTIONAL),_scoreGroup (OPTIONAL),_fall (OPTIONAL)]		// Final target exposure
 	];
 
-	_distIndex - targets are grouped, 0 = 100m targets, 1 = 200m targets, 2 = 300m targets, 3 = 400m targets
-	_targIndex - only used if there are multiple targets at each distance (current range design only has 1 target at each distance so this is not used)
-	_hitsPerTarg - number of hits before target goes stops scoring (-1 will make it continue to score for the entire exposure time)
+	_distIndex - targets are grouped by distance, for rifle ranges with the default layout 0 = 100m targets, 1 = 200m targets, 2 = 300m targets, 3 = 400m targets
+	_targIndex - only used if there are multiple targets at each distance (current range design only has 1 target at each distance so this is not used but)
+	_hitsPerTarg - number of hits before target stops scoring (-1 will make it continue to score for the entire exposure time)
 	_hitsRequired - number of hits before target is scored
 	_targScore - max number of hits before target stops scoring (-1 makes it infinite, hits will keep scoring as long as it stays up)
 	_exposure - amount of time target stays up for
@@ -56,19 +56,19 @@ private _interval100Default = 26; 	// time before next target when advancing 100
 private _targIndexDefault = if (count (missionNamespace getVariable format ["%1_TARGETS_BY_LANE_AND_DIST",_rangeID] select 0 select 0) > 1) then {-1} else {0}; // if there is only one target the default is the index of that target (0) else it is -1 which will select a random target by default (see  fn_runProgram.sqf)
 
 // Define custom drills here with a unique string for each case, add this string to the drills array fn_initRifleRange function.
-// NOTE: User is unable to switch drill in game without using ACE3 actions, if using vanilla only modify the "ETR_default" drill
+// NOTE: User is unable to switch drill in game without using ACE3 actions, if using the rifle range without ace3 only modify the "ETR_default" drill
 switch (_drill) do {
 	case "ETR_default": {
-		_targIndex = 0;		// element to select from target array grouped by lane and distance
+		_targIndex = 0;						// element to select from target array grouped by lane and distance
 		_exposure = _exposureDefault;		// time a target is raised for
 		_interval = _intervalDefault;		// time before next target
 		_intervalP2K = _intervalP2KDefault;	// time before next target when the player would need to switch from prone to kneeling
 		_interval50 = _interval50Default;	// time before next target when the player would need to advance 50m
 		_interval100 = _interval100Default;	// time before next target when the player would need to advance 100m
 
-		_hitsPerTarg = 5; // Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
-		_hitsRequired = 1; // Number of hits required to trigger a score
-		_targScore = 1; // Number of points target is worth
+		_hitsPerTarg = 5;					// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsRequired = 1;					// Number of hits required to trigger a score
+		_targScore = 1;						// Number of points a score is worth
 
 		_program = [
 			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval100,true],		// 400m prone, advance to main firing position
@@ -83,16 +83,16 @@ switch (_drill) do {
 		];
 	};
 	case "ETR_ironsights": {
-		_targIndex = 0;		// element to select from target array grouped by lane and distance
+		_targIndex = 0;						// element to select from target array grouped by lane and distance
 		_exposure = _exposureDefault;		// time a target is raised for
 		_interval = _intervalDefault;		// time before next target
 		_intervalP2K = _intervalP2KDefault;	// time before next target when the player would need to switch from prone to kneeling
 		_interval50 = _interval50Default;	// time before next target when the player would need to advance 50m
 		_interval100 = _interval100Default;	// time before next target when the player would need to advance 100m
 
-		_hitsPerTarg = 5; // Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
-		_hitsRequired = 1; // Number of hits required to trigger a score
-		_targScore = 1; // Number of points target is worth
+		_hitsPerTarg = 5;					// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsRequired = 1;					// Number of hits required to trigger a score
+		_targScore = 1;						// Number of points a score is worth
 
 		_program = [
 			[2,_targIndex,10,_targScore,_exposure - 1,_interval],									// 300m prone
@@ -115,7 +115,7 @@ switch (_drill) do {
 
 		_hitsPerTarg = 5; // Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; // Number of hits required to trigger a score
-		_targScore = 1; // Number of points target is worth
+		_targScore = 1; // Number of points a score is worth
 
 		_program = [
 			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval100,true],	// 400m prone, advance to main firing position
@@ -140,7 +140,7 @@ switch (_drill) do {
 
 		_hitsPerTarg = 5; 				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
-		_targScore = 1; 				// Number of points target is with
+		_targScore = 1; 				// Number of points a score is with
 
 		_program = [
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval],
@@ -158,22 +158,22 @@ switch (_drill) do {
 		_interval = 5;					// time before next target
 		_intervalSwitch = 12;			// time before next target when the player would need to switch stance or reload
 
-		_hitsPerTarg = -1;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsPerTarg = -1;				// Number of hits before target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
-		_targScore = 1;					// Number of points target is worth
+		_targScore = 1;					// Number of points a score is worth
 
 		_fall = false;
 
 		_program = [
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],		// phase 1 prone 20 shots at targets in sequence
 			[1,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,nil,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],		// phase 2 prone 20 shots at targets in sequence
 			[1,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,nil,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],		// phase 3 prone 20 shots at targets in sequence
 			[1,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_interval,false,nil,_fall],
 			[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,2,false,nil,_fall]
@@ -188,13 +188,14 @@ switch (_drill) do {
 		_interval = {_intervalMin + random (_intervalMax - _intervalMin)}; // random interval between min and max
 		_intervalSwitch = 12; 			// time before next target when the player would need to switch stance or reload
 
-		_hitsPerTarg = -1; 				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit until _exposure time expires)
+		_hitsPerTarg = 5; 				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit until _exposure time expires)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
-		_targScore = 1; 				// Number of points target is worth
+		_targScore = 1; 				// Number of points a score is worth
 
 		_fall = false;
 
 		_program = [
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],	// phase 1 prone 10 shots at semi random targets
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
@@ -203,8 +204,8 @@ switch (_drill) do {
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,1,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,1,_fall], 	// prone 10 shots at random targets
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,1,_fall],
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],	// phase 2 kneeling 10 shots at semi random targets
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
@@ -213,8 +214,8 @@ switch (_drill) do {
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,2,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,2,_fall], 	// kneeling 10 shots at random targets
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,2,_fall],
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],	// phase 3 standing 10 shots at semi random targets
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
@@ -223,14 +224,14 @@ switch (_drill) do {
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
 			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,3,_fall],
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,3,_fall], 	// standing 10 shots at random targets
-			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,10,2,false,4,_fall] 						// CQM exposure
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,_intervalSwitch,true,3,_fall],
+			[0,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,10,2,false,4,_fall] 						// phase 4 CQM exposure 10 shots while advancing at walking pace
 		];
 
 		// randomise target distance but with a consistant number of exposures at each distance
-		_distIndexArray = [0,0,1,1,1,2,2,2,3,3]; // 2 close, 3 mediuim
+		_distIndexArray = [0,0,1,1,1,2,2,2,3,3]; // 2 close, 3 mediuim, 3 far and 2 extreme
 
+		// shuffle _distIndexArray and replace the
 		for "_i" from 0 to 2 do {
 			_array = _distIndexArray call BIS_fnc_arrayShuffle;
 			{
@@ -246,9 +247,9 @@ switch (_drill) do {
 		_interval = 5;					// time before next target
 		_intervalSwitch = 10;			// time before next target when the player would need to switch stance
 
-		_hitsPerTarg = 3;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsPerTarg = 15;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
-		_targScore = 1;					// Number of points hit is worth
+		_targScore = 1;					// Number of points a score is worth
 
 		_fall = false;
 
@@ -276,7 +277,7 @@ switch (_drill) do {
 
 		_hitsPerTarg = 5;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
-		_targScore = 1;					// Number of points hit is worth
+		_targScore = 1;					// Number of points a score is worth
 
 		_fall = false;
 
@@ -302,11 +303,11 @@ switch (_drill) do {
 		_intervalMin = 3;				// min time interval
 		_intervalMax = 6;				// max interval
 		_interval = {_intervalMin + random (_intervalMax - _intervalMin)}; // random interval between min and max
-		_intervalSwitch = 10;			// time before next target when the player would need to switch stance
+		_intervalSwitch = 20;			// time before next target when the player would need to switch stance
 
-		_hitsPerTarg = 3;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
+		_hitsPerTarg = 5;				// Number of hits befroe target falls and stops scoring (-1 means it will not fall when hit and will score for the duration of the _exposure time)
 		_hitsRequired = 1; 				// Number of hits required to trigger a score
-		_targScore = 1;					// Number of points hit is worth
+		_targScore = 1;					// Number of points a score is worth
 
 		_fall = false;
 

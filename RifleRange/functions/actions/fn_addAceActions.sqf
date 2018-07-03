@@ -24,8 +24,6 @@ private ["_laneIndecies","_actionLane","_actionStart","_actionStop","_actionRese
 
 if (isNull _obj) exitWith {};
 
-waitUntil {missionNamespace getVariable [format ["%1_INIT_DONE",_rangeID],false]};
-
 if (typeOf _obj == "Land_Laptop_unfolded_F") then {
 	_obj setObjectTexture [0,"rifleRange\textures\blk.paa"];
 };
@@ -43,8 +41,8 @@ for "_n" from 1 to (missionNameSpace getVariable format ["%1_LANE_COUNT",_rangeI
 	_index = _n - 1;
 
 	_laneIndecies pushBack _index;
-
-	if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID],"ETR"] == "QBSR") then { // QBSR range type is the only range type that allows you to control lanes individually
+// TODO: Evalute functionality below as _rangeType is no longer used, focus shifted to _drillType
+/*	if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID],"ETR"] == "QBSR") then { // QBSR range type is the only range type that allows you to control lanes individually
 
 		_actionLane = [format ["%1%2",_rangeID,_n],format ["Lane %1",_n],"",{},{_this call RR_fnc_powerCondition},{},[_rangeID]] call ace_interact_menu_fnc_createAction;
 
@@ -74,10 +72,11 @@ for "_n" from 1 to (missionNameSpace getVariable format ["%1_LANE_COUNT",_rangeI
 
 		[_obj,0,["ACE_MainActions",format ["%1%2",_rangeID,_n]],_actionClearHighScore] call ace_interact_menu_fnc_addActionToObject;
 	};
-};
+*/};
 
 // All Lanes
-_actionName = if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID],"ETR"] != "QBSR") then {"Drill Control"} else {"All Lanes"};
+//_actionName = if (missionNamespace getVariable [format ["%1_RANGE_TYPE",_rangeID],"ETR"] != "QBSR") then {"Drill Control"} else {"All Lanes"};
+_actionName = "Drill Control";
 
 _actionLane = [format ["%1All",_rangeID],_actionName,"\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa",{},{_this call RR_fnc_powerCondition},{},[_rangeID,_laneIndecies]] call ace_interact_menu_fnc_createAction;
 
@@ -113,11 +112,11 @@ _actionSelectDrill = [format ["%1SelectDrill",_rangeID],"Select Firing Drill","\
 [_obj,0,["ACE_MainActions"],_actionSelectDrill] call ace_interact_menu_fnc_addActionToObject;
 
 {
-	_x params [["_actionName","",[""]],["_drillID","",[""]]];
+	_x params [["_actionName","",[""]]];
 
-	_actionDrill = [format ["%1_%2",_rangeID,_drillID],_actionName,"rifleRange\textures\icons\checkempty.paa",{_this remoteExec ["RR_fnc_drillSelectAction",2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] != _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
+	_actionDrill = [format ["%1_%2",_rangeID,_forEachIndex],_actionName,"rifleRange\textures\icons\checkempty.paa",{_this remoteExec ["RR_fnc_drillSelectAction",2]},{!((missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0]) isEqualTo (missionNamespace getVariable format ["%1_DRILLs",_this select 2 select 0] select (_this select 2 select 2)))},{},[_rangeID,_laneIndecies,_forEachIndex]] call ace_interact_menu_fnc_createAction;
 
-	_actionDrillCurrent = [format ["%1_%2_c",_rangeID,_drillID],_actionName,"rifleRange\textures\icons\check.paa",{_this remoteExec ["RR_fnc_drillSelectAction",2]},{missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0] == _this select 2 select 2},{},[_rangeID,_laneIndecies,_drillID]] call ace_interact_menu_fnc_createAction;
+	_actionDrillCurrent = [format ["%1_%2_c",_rangeID,_forEachIndex],_actionName,"rifleRange\textures\icons\check.paa",{_this remoteExec ["RR_fnc_drillSelectAction",2]},{(missionNamespace getVariable format ["%1_CURRENT_DRILL",_this select 2 select 0]) isEqualTo (missionNamespace getVariable format ["%1_DRILLs",_this select 2 select 0] select (_this select 2 select 2))},{},[_rangeID,_laneIndecies,_forEachIndex]] call ace_interact_menu_fnc_createAction;
 
 	[_obj,0,["ACE_MainActions",format ["%1SelectDrill",_rangeID]],_actionDrill] call ace_interact_menu_fnc_addActionToObject;
 

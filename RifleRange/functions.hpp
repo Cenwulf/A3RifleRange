@@ -35,17 +35,19 @@ class RifleRangeFunctions {
 	};
 	class Drills {
 		file = "rifleRange\functions\drills";
+		class addDrillInstructions {};
+		class compileFiringDrills {};
 		class runProgram {};
-		class startFiringDrill {};
 	};
 	class Init {
 		file = "rifleRange\functions\init";
+		class addRangeManual {};
+		class initCommon {};
 		class initRifleRange {};
 	};
 	class Misc {
 		file = "rifleRange\functions\misc";
 		class numberToArray {};
-		class setWhiteboardTexture {};
 	};
 	class Scoreboard {
 		file = "rifleRange\functions\scoreboard";

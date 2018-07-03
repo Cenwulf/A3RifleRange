@@ -20,8 +20,6 @@ scriptName "fn_drillSelectAction";
 
 params [["_obj",objNull,[objNull]],["_actor",objNull,[objNull]],["_customParams",[],[[]]]];
 
-_customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]],["_drillID","",[""]]];
+_customParams params [["_rangeID","",[""]],["_laneIndecies",[],[[]]],["_drillIndex",0,[0]]];
 
-missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],_drillID,true];
-
-[_rangeID, _drillID] call RR_fnc_setWhiteboardTexture;
+missionNamespace setVariable [format ["%1_CURRENT_DRILL",_rangeID],missionNamespace getVariable format ["%1_DRILLS",_rangeID] select _drillIndex,true];

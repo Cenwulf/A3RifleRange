@@ -55,4 +55,10 @@ sleep 0.5;
 
 sleep 0.5;
 
-_this spawn RR_fnc_startFiringDrill;
+_startTime = time;
+_program = missionNamespace getVariable format ["%1_CURRENT_DRILL",_rangeID] select 1; // gets current program for currently selected drill
+
+{
+	private _primary = if (_forEachIndex == 0) then {true} else {false}; // designates one lane to control buzzer timing
+	[_rangeID,_x,_startTime,_program,_primary] spawn RR_fnc_runProgram; // calls run program for each lane
+} forEach _laneIndecies;
