@@ -3,10 +3,11 @@ scriptName "fn_playHeadsetSound:";
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
 	Description:
-	Checks to see if player is wearing wireless reciever, if they are then it plays the sound passed with the function.
+	Checks to see if player is connected to the rifle range and if they are wearing wireless reciever, if they are then it plays the sound passed as an argument.
 
 	Parameter(s):
-	_this: String - Sound name defined in CfgSounds
+	_this select 0: String - Range ID
+	_this select 1: String - Sound name defined in CfgSounds
 
 	Returns:
 	Nothing
@@ -17,7 +18,8 @@ params [["_rangeID","",[""]],["_sound","",[""]]];
 
 if !hasInterface exitWith {};
 
-if (player getVariable ["RR_connectedRange",""] == _rangeID && {missionNamespace getVariable [format ["%1_CONTROL_OBJ",_rangeID],objNull] distance player < 500 && {goggles player == "G_WirelessEarpiece_F" || headgear player == "H_WirelessEarpiece_F" || headgear player == "H_Cap_oli_hs" || headgear player == "H_Cap_headphones"}}) then {
+private _playerItems = [headgear player, goggles player];
+
+if (player getVariable ["RR_connectedRange",""] == _rangeID && {count (RR_HEADSET_CLASSES arrayIntersect _playerItems) > 0}) then {
 	playSound _sound;
 };
-// TODO: Move headset enable classnames to a separate list in initRifleRange function
