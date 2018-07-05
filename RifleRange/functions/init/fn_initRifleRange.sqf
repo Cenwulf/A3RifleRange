@@ -38,7 +38,6 @@ waitUntil {missionNamespace getVariable ["RR_INIT_COMMON_DONE", false]};
 params [["_rangeID","ETR",[""]],["_drillTypes",["ETR"],[[]]],["_laneCount",5,[0]],["_digitCount",2,[0]],["_displayName","Firing Drills",[""]],["_rangeDescription","No data available.",[""]],["_imageRange","",[""]],["_marker",false,[true]],["_markerPos",[0,0,0],[[]],[2,3]],["_markerType","b_installation",[""]],["_markerColour","",[""]]];
 
 // Check for Range ID conflicts and exit if range id already exists
-sleep random 0.1;
 if (_rangeID in RR_RANGE_IDS) exitWith {[format ["Error: RR_fnc_initRifleRange - RangeID %1 already exists",_rangeID]] remoteExec ["systemChat"]};
 
 // add _rangeID to global range ID array

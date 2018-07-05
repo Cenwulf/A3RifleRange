@@ -186,9 +186,9 @@ if (_drillType != "") then {	// skip if there is no associated range type
 	];
 
 	_instructions =	""				// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font>" + _displayName + "<br />"
+	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
 	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font>" + _description + "<br />"
+	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
 	+ "<br />"
 	+"<font color='#FFC300'>Ammunition Issued:</font> 3x 20 round magazine<br />"
 	+ "<br />"
@@ -209,9 +209,9 @@ if (_drillType != "") then {	// skip if there is no associated range type
 	+ "<br />"
 	+"Each phase consists of a single exposure at each distance in the order: 100m, 200m, 300m, 400m.<br />"
 	+ "<br />"
-	+"A short sounding of the loudspeaker indicates the transition between phases, participants should adjust their stance and reload their weapon.<br />"
+	+"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />"
 	+ "<br />"
-	+"Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 5x 1 round shot per exposure.<br />"
+	+"Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 5x single round shots per exposure.<br />"
 	+ "<br />"
 	+"A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon.";
 
@@ -288,9 +288,9 @@ if (_drillType != "") then {	// skip if there is no associated range type
 	};
 
 	_instructions =	""				// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font>" + _displayName + "<br />"
+	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
 	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font>" + _description + "<br />"
+	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
 	+ "<br />"
 	+"<font color='#FFC300'>Ammunition Issued:</font> 4x 10 round magazine<br />"
 	+ "<br />"
@@ -313,9 +313,9 @@ if (_drillType != "") then {	// skip if there is no associated range type
 	+ "<br />"
 	+"Phase 4 consists of a single CQM exposure at 100m.<br />"
 	+ "<br />"
-	+"A short sounding of the loudspeaker indicates the transition between phases, participants should adjust their stance and reload their weapon.<br />"
+	+"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />"
 	+ "<br />"
-	+"During phases 2 and 3 (kneeling and standing), participants should have their weapon lowered at all times. When a target appears, participants should aim down the sights of the weapon, acquire the target, engage the target with a single 1 round shot and lower their weapon.<br />"
+	+"During phases 2 and 3 (kneeling and standing), participants should have their weapon lowered at all times. When a target appears, participants should aim down the sights of the weapon, acquire the target, engage the target with 1x single round shot and lower their weapon.<br />"
 	+ "<br />"
 	+"During phase 4 (CQB), participants should aim down their alternative short-range sight (red dot) if available, advance towards the target at walking pace and engage the target with 10x single round shots in rapid succession.<br />"
 	+ "<br />"
@@ -363,9 +363,9 @@ if (_drillType != "") then {		// skip if there is no associated range type
 	];
 
 	_instructions =	""					// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font>" + _displayName + "<br />"
+	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
 	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font>" + _description + "<br />"
+	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
 	+ "<br />"
 	+ "<font color='#FFC300'>Ammunition Issued:</font> 3x 60 round belt<br />"
 	+ "<br />"
@@ -386,7 +386,7 @@ if (_drillType != "") then {		// skip if there is no associated range type
 	+ "<br />"
 	+ "Each phase consists of a single exposure at each distance in the order: 100m, 200m, 300m, 400m.<br />"
 	+ "<br />"
-	+ "A short sounding of the loudspeaker indicates the transition between phases, participants should adjust their stance and reload their weapon.<br />"
+	+ "The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />"
 	+ "<br />"
 	+ "Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 3x 3-5 round bursts per exposure.<br />"
 	+ "<br />"
@@ -442,9 +442,9 @@ if (_drillType != "") then {		// skip if there is no associated range type
 	];
 
 	_instructions =	""					// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font>" + _displayName + "<br />"
+	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
 	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font>" + _description + "<br />"
+	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
 	+ "<br />"
 	+ "<font color='#FFC300'>Ammunition Issued:</font> 1x 100 round belt<br />"
 	+ "<br />"
@@ -462,6 +462,8 @@ if (_drillType != "") then {		// skip if there is no associated range type
 	+ "<br />"
 	+ "<font color='#FFC300'>Instructions:</font><br />"
 	+ "The defensive-fire module consists of a single phase designed to simulate an advancing and then retreating enemy force. The entire drill should be taken from the firing trench, kneeling with weapon supported.<br />"
+	+ "<br />"
+	+ "The beginning of the exercise is marked by a short sounding of the loudspeaker.<br />"
 	+ "<br />"
 	+ "The first half of the drill consists of a number of exposure at each distance advancing towards the firing position in the order: 400m, 300m, 200m, 100m. The second half consists of a number of exposures at each distance withdrawing from the firing position in the order: 100m, 200m, 300m, 400m.<br />"
 	+ "<br />"
@@ -506,9 +508,9 @@ if (_drillType != "") then {	// skip if there is no associated range type
 		[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,nil,_fall]
 	];
 	_instructions =	""				// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
-/*	+ "<font color='#FFC300'>Drill ID:</font>" + _displayName + "<br />"
+/*	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
 	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font>" + _description + "<br />"
+	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
 	+ "<br />"
 	+ "<font color='#FFC300'>Ammunition Issued:</font> 1x 100 round belt<br />"
 	+ "<br />"
