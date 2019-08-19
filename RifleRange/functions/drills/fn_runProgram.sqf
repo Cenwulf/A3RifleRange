@@ -115,6 +115,8 @@ if (_primary) then {
 
 	_targ setVariable ["isActive",true]; // now registers hits
 
+	// Note: scoring is handled by a hit even handler attached to each target, logic is managed using the above variables set for each target.
+
 	waitUntil { // Wait until the number of hits have been reached or the exposure time is exceeded or run is stopped
 		if (missionNamespace getVariable format ["%1_STATES_ARRAY", _rangeID] select _laneIndex select 3) then { // if paused set target as inactive (wont register hits) record time delay and wait for continue or stop command
 			_targ setVariable ["isActive",false]; // stop registers hits

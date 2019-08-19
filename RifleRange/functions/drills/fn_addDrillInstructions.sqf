@@ -23,45 +23,28 @@ scriptName "fn_addDrillInstructions";
 */
 #define SELF RR_fnc_addDrillInstructions
 
-params [["_rangeID","ETR",[""]],["_drillTypes",["ETR"],[[]]],["_laneCount",5,[0]],["_digitCount",2,[0]],["_displayName","Firing Drills",[""]],["_rangeDescription","No data available.",[""]],["_imageRange","",[""]],["_marker",false,[true]],["_markerPos",[0,0,0],[[]],[2,3]],["_markerType","b_installation",[""]],["_markerColour","",[""]]];
+params [["_subject","DrillInstructions",[""]],["_displayName","Firing Drills",[""]],["_rangeDescription","No data available.",[""]],["_imageRange","",[""]],["_compiledInstructions",["No data available."],[[]]],["_markerName",[""],[""]]];
 
-private _subject = format ["%1_DrillInstructions", _rangeID];
+player createDiarySubject [_subject,_displayName,_imageRange];
 
-[player,[_subject,_displayName,_imageRange]] remoteExecCall ["createDiarySubject",0,true];
+// add all diary records to an array so they can be used to add links in the main range discription diary record
+private _diaryRecords = [];
 
-// diary records apear in the reverse order that they are added so need compile all drill intructions into an array so we can reverse array without modifying <RANGEID>_DRILLS array
-private _compiledInstructions = [];
+// add diary records
 {
-	_x params [["_drillName","<DISPLAY NAME NOT DEFINED>",[""]],["_program",[],[[]]],["_drillType","",[""]],["_instructions","No documentation available.",[""]],["_imageDrill","",[""]]];
-
-	_compiledInstructions pushBack [_subject,[_drillName,_instructions]];
-
-} forEach (missionNamespace getVariable format ["%1_DRILLS", _rangeID]);
-
-reverse _compiledInstructions;
-
-// add diary records in reverse order using remote exec
-{
-	[player,_x] remoteExecCall ["createDiaryRecord",0,true];
+	_x params ["_subject","_details"];
+	_details params ["_drillName","_instructions"];
+	private _record = player createDiaryRecord _x;
+	_diaryRecords pushBack [_subject,_record,_drillName];
 } forEach _compiledInstructions;
 
-// create marker
-private _markerName = format ["%1_MARKER", _rangeID];
+// finally add the range description with link to marker if added and add links for availbe drill instruction diary records
+private _text = ["<font size='18'><marker name='", _markerName, "'>", _displayName, "</marker></font><br /><br />", _rangeDescription, "<br /><br />Available firing drills:"] joinString "";
 
-if (_marker) then {
-	createMarker [_markerName, _markerPos];
-	_markerName setMarkerType _markerType;
-	_markerName setMarkerText _displayName;
-	if (_markerColour != "") then {_markerName setMarkerColor _markerColour};
-};
-
-// finally add the range description with link to marker if added
-private _text = "<font size='18'><marker name='" + _markerName + "'>" + _displayName + "</marker></font><br /><br />" + _rangeDescription/* + "<br /><br /> Available firing drills:";
-
-reverse _compiledInstructions;
+reverse _diaryRecords; // diary records are added in revers order above so the _diary record array must first be reversed to get it back in correct order
 
 {
-	_text = _text + "<br /><br />" + createDiaryLink ["_subject", _x select 1 select 1, _x select 1 select 0];
-} forEach _compiledInstructions*/;
+	_text = [_text, "<br />", createDiaryLink _x] joinString "";
+} forEach _diaryRecords;
 
 [player,[_subject,[_displayName,_text]]] remoteExecCall ["createDiaryRecord",0,true];

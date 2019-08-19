@@ -1,4 +1,4 @@
-scriptName "fn_startFiringDrill";
+scriptName "fn_compileFiringDrills";
 /*
 	Author: Alasdair Scott [16AA] <http://16aa.net/>
 
@@ -22,10 +22,11 @@ scriptName "fn_startFiringDrill";
 	];
 
 	_distIndex - targets are grouped by distance, for rifle ranges with the default layout 0 = 100m targets, 1 = 200m targets, 2 = 300m targets, 3 = 400m targets
-	_targIndex - only used if there are multiple targets at each distance (current range design only has 1 target at each distance so this is not used but)
+	_targIndex - number or array, selects a target from a group 0 being the first target in the distance grouping in the case of an array it selects each target listed (e.g. [0,1,2] will the first three targets of that distance group provided that group has at least three targets listed)
 	_hitsPerTarg - number of hits before target stops scoring (-1 will make it continue to score for the entire exposure time)
-	_hitsRequired - number of hits before target is scored
-	_targScore - max number of hits before target stops scoring (-1 makes it infinite, hits will keep scoring as long as it stays up)
+	_hitsRequired - number of hits required to score any points
+	_targScore - number of points awarded each time a score is triggered
+	_targScoreMax - max score before target stops scoring (NOT CURRENTLY IMPLEMENTED - probably never will be as the same can be achieved with _hitsPerTarg)
 	_exposure - amount of time target stays up for
 	_interval - amount of time before next target once _exposure time has elapsed
 	_buzzer - dictates whether the buzzer should sound at the end of this targets _exposure time (used to signal shooter to move or change stance) (default false)
@@ -48,11 +49,11 @@ private _interval100Default = 26; 	// time before next target when advancing 100
 // ETR Default 		======================================================================================
 _displayName = "ETR (Default)";			// string displayed in the ACE3 actions drill selection
 _description = "";						// slightly more detailed desctiption for use in diary record
-_drillType = ""; 						// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = ""; 						// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";							// image path to be used for diary record
-_instructions = "";						// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
+_instructions = "";						// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
 
-if (_drillType != "") then {		// skip if there is no associated range type
+if (_drillType != "") then {			// skip if there is no drill type defined
 	_targIndex = 0;						// element to select from target array grouped by lane and distance
 	_exposure = _exposureDefault;		// time a target is raised for
 	_interval = _intervalDefault;		// time before next target
@@ -85,11 +86,11 @@ if (_drillType != "") then {		// skip if there is no associated range type
 
 _displayName = "ETR (Ironsights)";		// string displayed in the ACE3 actions drill selection
 _description = "";						// slightly more detailed desctiption for use in diary record
-_drillType = ""; 						// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = ""; 						// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";							// image path to be used for diary record
-_instructions = "";						// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
+_instructions = "";						// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
 
-if (_drillType != "") then {		// skip if there is no associated range type
+if (_drillType != "") then {			// skip if there is no drill type defined
 	_targIndex = 0;						// element to select from target array grouped by lane and distance
 	_exposure = _exposureDefault;		// time a target is raised for
 	_interval = _intervalDefault;		// time before next target
@@ -121,11 +122,11 @@ if (_drillType != "") then {		// skip if there is no associated range type
 
 _displayName = "ETR (Sidearm)";		// string displayed in the ACE3 actions drill selection
 _description = "";					// slightly more detailed desctiption for use in diary record
-_drillType = "ETRP"; 				// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = "ETRP"; 				// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";						// image path to be used for diary record
-_instructions = "";					// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
+_instructions = "";					// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
 
-if (_drillType != "") then {	// skip if there is no associated range type
+if (_drillType != "") then {		// skip if there is no drill type defined
 	_targIndex = 0;					// element to select from target array grouped by lane and distance
 	_exposure = 8; 					// time a target is raised for
 	_interval = 2; 					// time before next target
@@ -155,10 +156,10 @@ if (_drillType != "") then {	// skip if there is no associated range type
 
 _displayName = "ACTM (Rapid)";		// string displayed in the ACE3 actions drill selection
 _description = "Annual Combat Marksmanship Test - Rapid-Fire Module";// slightly more detailed desctiption for use in diary record
-_drillType = "ETR";		// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = "ETR";					// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";						// image path to be used for diary record
 
-if (_drillType != "") then {	// skip if there is no associated range type
+if (_drillType != "") then {		// skip if there is no drill type defined
 	_targIndex = 0;					// element to select from target array grouped by lane and distance
 	_exposure = 10;					// time a target is raised for
 	_interval = 5;					// time before next target
@@ -185,35 +186,36 @@ if (_drillType != "") then {	// skip if there is no associated range type
 		[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,2,false,nil,_fall]
 	];
 
-	_instructions =	""				// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Ammunition Issued:</font> 3x 20 round magazine<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Number of Exposures:</font> 12<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Engagement:</font> 5x single round per exposure<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Maximum Score:</font> 60<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Exposure Time:</font> 10 seconds<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Target Interval:</font> 5 seconds<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Phase Transition Interval:</font> 12 seconds<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Instructions:</font><br />"
-	+"The rapid-fire module consists of three identical phases. Phase 1 should be taken from prone with weapon supported or unsupported, phase 2 from kneeling with weapon unsupported, phase 3 from standing with weapon unsupported.<br />"
-	+ "<br />"
-	+"Each phase consists of a single exposure at each distance in the order: 100m, 200m, 300m, 400m.<br />"
-	+ "<br />"
-	+"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />"
-	+ "<br />"
-	+"Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 5x single round shots per exposure.<br />"
-	+ "<br />"
-	+"A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon.";
+	_instructions =	[				// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
+		"<font color='#FFC300'>Drill ID:</font> ", _displayName, "<br />",
+		"<br />",
+		"<font color='#FFC300'>Description:</font> ", _description, "<br />",
+		"<br />",
+		"<font color='#FFC300'>Ammunition Issued:</font> 3x 20 round magazine<br />",
+		"<br />",
+		"<font color='#FFC300'>Number of Exposures:</font> 12<br />",
+		 "<br />",
+		"<font color='#FFC300'>Engagement:</font> 5x single round per exposure<br />",
+		 "<br />",
+		"<font color='#FFC300'>Maximum Score:</font> 60<br />",
+		"<br />",
+		"<font color='#FFC300'>Exposure Time:</font> 10 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Target Interval:</font> 5 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Phase Transition Interval:</font> 12 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Instructions:</font><br />",
+		"The rapid-fire module consists of three identical phases. Phase 1 should be taken from prone with weapon supported or unsupported, phase 2 from kneeling with weapon unsupported, phase 3 from standing with weapon unsupported.<br />",
+		"<br />",
+		"Each phase consists of a single exposure at each distance in the order: 100m, 200m, 300m, 400m.<br />",
+		"<br />",
+		"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />",
+		"<br />",
+		"Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 5x single round shots per exposure.<br />",
+		"<br />",
+		"A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon."
+	] joinString "";
 
 	_drills pushBack [_displayName,_program,_drillType,_instructions,_image];
 };
@@ -224,10 +226,10 @@ if (_drillType != "") then {	// skip if there is no associated range type
 
 _displayName = "ACTM (Snap)";		// string displayed in the ACE3 actions drill selection
 _description = "Annual Combat Marksmanship Test - Snap Shoot Module";						// slightly more detailed desctiption for use in diary record
-_drillType = "ETR";					// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = "ETR";					// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";						// image path to be used for diary record
 
-if (_drillType != "") then {	// skip if there is no associated range type
+if (_drillType != "") then {		// skip if there is no drill type defined
 	_targIndex = 0;					// element to select from target array grouped by lane and distance
 	_exposure = 3; 					// time a target is raised for
 	_intervalMin = 0.5;				// min time interval
@@ -287,41 +289,42 @@ if (_drillType != "") then {	// skip if there is no associated range type
 		} forEach _array;
 	};
 
-	_instructions =	""				// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Ammunition Issued:</font> 4x 10 round magazine<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Number of Exposures:</font> 31<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Engagement:</font> 1x single round per exposure (Phases 1 to 3); 10x single round rapid for 1 exposure (Phase 4)<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Maximum Score:</font> 40<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Exposure Time:</font> 3 seconds (Phases 1 to 3); 10 seconds (Phase 4)<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Target Interval:</font> Between 0.5 and 12 seconds<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Phase Transition Interval:</font> 12 seconds<br />"
-	+ "<br />"
-	+"<font color='#FFC300'>Instructions:</font><br />"
-	+"The snap shoot module consists of three identical phases consisting of semi randomised exposures and an additional phase consisting of a CQB exposure. Phase 1 should be taken from prone with weapon supported or unsupported, phase 2 from kneeling with weapon unsupported, phase 3 from standing with weapon unsupported, phase 4 from standing while advancing towards the target at walking pace.<br />"
-	+ "<br />"
-	+"Phases 1 to 3 consist of a semi-random set of 10 exposures. 2 exposures at 100m, 3 exposures at 200m, 3 exposures at 300m and 2 exposures at 400m.<br />"
-	+ "<br />"
-	+"Phase 4 consists of a single CQM exposure at 100m.<br />"
-	+ "<br />"
-	+"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />"
-	+ "<br />"
-	+"During phases 2 and 3 (kneeling and standing), participants should have their weapon lowered at all times. When a target appears, participants should aim down the sights of the weapon, acquire the target, engage the target with 1x single round shot and lower their weapon.<br />"
-	+ "<br />"
-	+"During phase 4 (CQB), participants should aim down their alternative short-range sight (red dot) if available, advance towards the target at walking pace and engage the target with 10x single round shots in rapid succession.<br />"
-	+ "<br />"
-	+"A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon.<br />"
-	+ "<br />"
-	+"NOTE: Difficulty of the CQB exposure can be increased by increasing the speed of the advance and/or switching to fully automatic fire.";
+	_instructions =	[				// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
+		"<font color='#FFC300'>Drill ID:</font> ", _displayName, "<br />",
+		"<br />",
+		"<font color='#FFC300'>Description:</font> ", _description, "<br />",
+		"<br />",
+		"<font color='#FFC300'>Ammunition Issued:</font> 4x 10 round magazine<br />",
+		"<br />",
+		"<font color='#FFC300'>Number of Exposures:</font> 31<br />",
+		"<br />",
+		"<font color='#FFC300'>Engagement:</font> 1x single round per exposure (Phases 1 to 3); 10x single round rapid for 1 exposure (Phase 4)<br />",
+		"<br />",
+		"<font color='#FFC300'>Maximum Score:</font> 40<br />",
+		"<br />",
+		"<font color='#FFC300'>Exposure Time:</font> 3 seconds (Phases 1 to 3); 10 seconds (Phase 4)<br />",
+		"<br />",
+		"<font color='#FFC300'>Target Interval:</font> Between 0.5 and 12 seconds<br />",
+		 "<br />",
+		"<font color='#FFC300'>Phase Transition Interval:</font> 12 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Instructions:</font><br />",
+		"The snap shoot module consists of three identical phases consisting of semi randomised exposures and an additional phase consisting of a CQB exposure. Phase 1 should be taken from prone with weapon supported or unsupported, phase 2 from kneeling with weapon unsupported, phase 3 from standing with weapon unsupported, phase 4 from standing while advancing towards the target at walking pace.<br />",
+		"<br />",
+		"Phases 1 to 3 consist of a semi-random set of 10 exposures. 2 exposures at 100m, 3 exposures at 200m, 3 exposures at 300m and 2 exposures at 400m.<br />",
+		"<br />",
+		"Phase 4 consists of a single CQM exposure at 100m.<br />",
+		"<br />",
+		"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />",
+		"<br />",
+		"During phases 2 and 3 (kneeling and standing), participants should have their weapon lowered at all times. When a target appears, participants should aim down the sights of the weapon, acquire the target, engage the target with 1x single round shot and lower their weapon.<br />",
+		"<br />",
+		"During phase 4 (CQB), participants should aim down their alternative short-range sight (red dot) if available, advance towards the target at walking pace and engage the target with 10x single round shots in rapid succession.<br />",
+		"<br />",
+		"A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon.<br />",
+		"<br />",
+		"NOTE: Difficulty of the CQB exposure can be increased by increasing the speed of the advance and/or switching to fully automatic fire."
+	] joinString "";
 
 	_drills pushBack [_displayName,_program,_drillType,_instructions,_image];
 };
@@ -332,10 +335,10 @@ if (_drillType != "") then {	// skip if there is no associated range type
 
 _displayName = "LMG/GPMG LR (Rapid)";	// string displayed in the ACE3 actions drill selection
 _description = "Light Machinegun/General Purpose Machinegun - Rapid Fire Module";// slightly more detailed desctiption for use in diary record
-_drillType = "LMG"; 					// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = "LMG"; 					// drill type that - at range creation an arrat of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (drill will not be compiled if this value is "")
 _image = "";							// image path to be used for diary record
 
-if (_drillType != "") then {		// skip if there is no associated range type
+if (_drillType != "") then {			// skip if there is no drill type defined
 	_targIndex = [0,1,2];				// elements to select from target array grouped by lane and distance
 	_exposure = 8;						// time a target is raised for
 	_interval = 3;						// time before next target
@@ -362,35 +365,36 @@ if (_drillType != "") then {		// skip if there is no associated range type
 		[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,2,false,nil,_fall]
 	];
 
-	_instructions =	""					// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
-	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Ammunition Issued:</font> 3x 60 round belt<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Number of Exposures:</font> 12<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Engagement:</font> 3x 3-5 round burst per exposure<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Maximum Score:</font> 108 to 180<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Exposure Time:</font> 8 seconds<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Target Interval:</font> 3 seconds<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Phase Transition Interval:</font> 20 seconds<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Instructions:</font><br />"
-	+ "The rapid-fire module consists of three identical phases. Phase 1 should be taken from prone with weapon supported, phase 2 from kneeling with weapon unsupported, phase 3 from standing with weapon unsupported.<br />"
-	+ "<br />"
-	+ "Each phase consists of a single exposure at each distance in the order: 100m, 200m, 300m, 400m.<br />"
-	+ "<br />"
-	+ "The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />"
-	+ "<br />"
-	+ "Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 3x 3-5 round bursts per exposure.<br />"
-	+ "<br />"
-	+ "A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon.";
+	_instructions =	[					// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
+		"<font color='#FFC300'>Drill ID:</font> ", _displayName, "<br />",
+		"<br />",
+		"<font color='#FFC300'>Description:</font> ", _description, "<br />",
+		"<br />",
+		"<font color='#FFC300'>Ammunition Issued:</font> 3x 60 round belt<br />",
+		"<br />",
+		"<font color='#FFC300'>Number of Exposures:</font> 12<br />",
+		"<br />",
+		"<font color='#FFC300'>Engagement:</font> 3x 3-5 round burst per exposure<br />",
+		"<br />",
+		"<font color='#FFC300'>Maximum Score:</font> 108 to 180<br />",
+		"<br />",
+		"<font color='#FFC300'>Exposure Time:</font> 8 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Target Interval:</font> 3 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Phase Transition Interval:</font> 20 seconds<br />",
+		"<br />",
+		"<font color='#FFC300'>Instructions:</font><br />",
+		"The rapid-fire module consists of three identical phases. Phase 1 should be taken from prone with weapon supported, phase 2 from kneeling with weapon unsupported, phase 3 from standing with weapon unsupported.<br />",
+		"<br />",
+		"Each phase consists of a single exposure at each distance in the order: 100m, 200m, 300m, 400m.<br />",
+		"<br />",
+		"The beginning of the exercise is marked by a short sounding of the loudspeaker. Subsequent short soundings of the loudspeaker indicate the transition between phases, participants should adjust their stance and reload their weapon.<br />",
+		"<br />",
+		"Participants should aim down the sights of the weapon for the duration of the exercise and engage each target with 3x 3-5 round bursts per exposure.<br />",
+		"<br />",
+		"A long sounding of the loudspeaker indicates the end of the exercise. Participants should cease fire immediately and make safe their weapon."
+	] joinString "";
 
 	_drills pushBack [_displayName,_program,_drillType,_instructions,_image];
 };
@@ -401,10 +405,10 @@ if (_drillType != "") then {		// skip if there is no associated range type
 
 _displayName = "LMG/GPMG LR (Defense)";	// string displayed in the ACE3 actions drill selection
 _description = "Light Machinegun/General Purpose Machinegun - Defensive Fire Module";// slightly more detailed desctiption for use in diary record
-_drillType = "LMG"; 					// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = "LMG"; 					// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";							// image path to be used for diary record
 
-if (_drillType != "") then {		// skip if there is no associated range type
+if (_drillType != "") then {			// skip if there is no drill type defined
 	_targIndex = [0,1,2];				// elements to select from target array grouped by lane and distance
 	_exposure = 8;						// time a target is raised for
 	_intervalMin = 3;					// min time interval
@@ -441,7 +445,7 @@ if (_drillType != "") then {		// skip if there is no associated range type
 		[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,nil,_fall]
 	];
 
-	_instructions =	""					// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
+	_instructions =	""					// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
 	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
 	+ "<br />"
 	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
@@ -477,16 +481,16 @@ if (_drillType != "") then {		// skip if there is no associated range type
 // =======================================================================================================
 
 // Custom Drills
-// copy and past the template below to create custome firing drills
+// copy and past the template below to create custom firing drills
 
 // Custom Template	======================================================================================
 
 _displayName = "My Drill";			// string displayed in the ACE3 actions drill selection
 _description = "My Rifle Drill";	// slightly more detailed desctiption for use in diary record
-_drillType = ""/*"MyRangeType"*/;	// array of range types this drill should be added to at range creation (not in use if empty)
+_drillType = ""/*"MyRangeType"*/;	// drill type - at range creation an array of drill types is passed to RR_fnc_initRifleRange defined by the user who designed the rifle range, all drills with a given type are made available to that range (this drill will not be compiled if this value is "")
 _image = "";						// image path to be used for diary record
 
-if (_drillType != "") then {	// skip if there is no associated range type
+if (_drillType != "") then {		// skip if there is no drill type defined
 	_targIndex = 0;					// elements to select from target array grouped by lane and distance 0 is the default and will select the first element from the available list of targets
 	_exposure = 10;					// time a target is raised for
 	_intervalMin = 3;				// min time interval
@@ -507,27 +511,28 @@ if (_drillType != "") then {	// skip if there is no associated range type
 		[2,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,nil,_fall],
 		[3,_targIndex,_hitsPerTarg,_hitsRequired,_targScore,_exposure,call _interval,false,nil,_fall]
 	];
-	_instructions =	""				// structured text in createDirayRecord formatintended to give a detailed overview of the drill (Optional)
-/*	+ "<font color='#FFC300'>Drill ID:</font> " + _displayName + "<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Description:</font> " + _description + "<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Ammunition Issued:</font> 1x 100 round belt<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Number of Exposures:</font> 20<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Engagement:</font> 1x 3-5 round burst per exposure<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Maximum Score:</font> 0<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Exposure Time:</font> 10 seconds<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Target Interval:</font> Between 3 and 6 seconds<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Phase Transition Interval:</font> None<br />"
-	+ "<br />"
-	+ "<font color='#FFC300'>Instructions:</font><br />"
-	+ "How you should stand, aim and shoot during this drill."*/;
+	_instructions =	[""/*,			// structured text in createDirayRecord format intended to give a detailed overview of the drill (Optional)
+	"<font color='#FFC300'>Drill ID:</font> ", _displayName, "<br />",
+	"<br />",
+	"<font color='#FFC300'>Description:</font> ", _description, "<br />",
+	"<br />",
+	"<font color='#FFC300'>Ammunition Issued:</font> 1x 100 round belt<br />",
+	"<br />",
+	"<font color='#FFC300'>Number of Exposures:</font> 20<br />",
+	"<br />",
+	"<font color='#FFC300'>Engagement:</font> 1x 3-5 round burst per exposure<br />",
+	"<br />",
+	"<font color='#FFC300'>Maximum Score:</font> 0<br />",
+	"<br />",
+	"<font color='#FFC300'>Exposure Time:</font> 10 seconds<br />",
+	"<br />",
+	"<font color='#FFC300'>Target Interval:</font> Between 3 and 6 seconds<br />",
+	"<br />",
+	"<font color='#FFC300'>Phase Transition Interval:</font> None<br />",
+	"<br />",
+	"<font color='#FFC300'>Instructions:</font><br />",
+	"How you should stand, aim and shoot during this drill, when you should expect to change stance, etc."*/
+	] joinString "";
 
 	_drills pushBack [_displayName,_program,_drillType,_instructions,_image];
 };
