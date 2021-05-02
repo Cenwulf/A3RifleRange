@@ -13,7 +13,7 @@ scriptName "fn_addRangeManual";
 */
 #define SELF RR_fnc_addRangeManual
 
-waitUntil {player == player};
+waitUntil {!isNull player};
 
 player createDiarySubject ["RR_RifleRangeManual","Rifle Range Manual"];
 

@@ -13,8 +13,8 @@ scriptName "fn_initRifleRange";
 	_this select 4: String	- (Optional) Range display name used for map marker and diary records.
 	_this select 5: String	- (Optional) Description of the range intended to be used in the diary record.
 	_this select 6: String	- (Optional) Path to image file to be used for range specific diary subject.
-	_this select 7: Bool	- (Optional) Defines whether a map marker should be placed for the range marker is placed over the range control object.
-	_this select 8: Array	- Marker position 2d or 3d.
+	_this select 7: Bool	- (Optional) Defines whether the range map marker is placed (requires minimum of marker position and type to be defined)
+	_this select 8: Array	- (Optional) Marker position 2d or 3d.
 	_this select 9: String	- (Optional) Marker type see CfgMarkers (https://community.bistudio.com/wiki/cfgMarkers).
 	_this select 10: String	- (Optional) Marker colour see CfgMarkerColors (https://community.bistudio.com/wiki/CfgMarkerColors_Arma_3). Does not need to be defined will take colour side from marker type by default.
 

@@ -23,6 +23,8 @@ scriptName "fn_addDrillInstructions";
 */
 #define SELF RR_fnc_addDrillInstructions
 
+waitUntil {!isNull player};
+
 params [["_subject","DrillInstructions",[""]],["_displayName","Firing Drills",[""]],["_rangeDescription","No data available.",[""]],["_imageRange","",[""]],["_compiledInstructions",["No data available."],[[]]],["_markerName",[""],[""]]];
 
 player createDiarySubject [_subject,_displayName,_imageRange];
@@ -41,7 +43,7 @@ private _diaryRecords = [];
 // finally add the range description with link to marker if added and add links for availbe drill instruction diary records
 private _text = ["<font size='18'><marker name='", _markerName, "'>", _displayName, "</marker></font><br /><br />", _rangeDescription, "<br /><br />Available firing drills:"] joinString "";
 
-reverse _diaryRecords; // diary records are added in revers order above so the _diary record array must first be reversed to get it back in correct order
+reverse _diaryRecords; // diary records are added in reverse order above so the _diaryRecords array must first be reversed to get it back in correct order
 
 {
 	_text = [_text, "<br />", createDiaryLink _x] joinString "";
