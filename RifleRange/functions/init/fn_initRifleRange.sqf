@@ -74,6 +74,7 @@ private _subject = format ["%1_DrillInstructions", _rangeID];
 private _manual2TextArray = [];
 
 private _compiledInstructions = [];
+
 {
 	_x params [["_drillName","<DISPLAY NAME NOT DEFINED>",[""]],["_program",[],[[]]],["_drillType","",[""]],["_instructions","No documentation available.",[""]],["_imageDrill","",[""]]];
 
@@ -87,7 +88,7 @@ missionNamespace setVariable [format ["%1_RANGE_MANUAL_TEXT",_rangeID],_manual2T
 
 reverse _compiledInstructions;
 
-[_subject,_displayName,_rangeDescription,_imageRange,_compiledInstructions,_markerName] remoteExec ["RR_fnc_addDrillInstructions",0,true];
+[_subject,_compiledInstructions,_displayName,_rangeDescription,_imageRange,_markerName] remoteExec ["RR_fnc_addDrillInstructions",0,true];
 
 // add text to physical manuals
 // WIP phisical rifle range manual
